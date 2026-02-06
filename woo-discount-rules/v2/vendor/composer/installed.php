@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => '2.6.10.x-dev',
-        'version' => '2.6.10.9999999-dev',
+        'pretty_version' => '2.6.12.x-dev',
+        'version' => '2.6.12.9999999-dev',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '005fcdbe7e3245cd0adf8843682ced50baf8712e',
+        'reference' => '1d2ee2f49604243ad8f27914480f2650ed26a90a',
         'name' => 'flycart/woo_discount_rules_v2',
         'dev' => false,
     ),
     'versions' => array(
         'flycart/woo_discount_rules_v2' => array(
-            'pretty_version' => '2.6.10.x-dev',
-            'version' => '2.6.10.9999999-dev',
+            'pretty_version' => '2.6.12.x-dev',
+            'version' => '2.6.12.9999999-dev',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '005fcdbe7e3245cd0adf8843682ced50baf8712e',
+            'reference' => '1d2ee2f49604243ad8f27914480f2650ed26a90a',
             'dev_requirement' => false,
         ),
         'vlucas/valitron' => array(
