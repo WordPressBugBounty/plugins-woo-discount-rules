@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd0892bb1a2a7e9bd983c1e8e72343589c5d81d6d',
+        'reference' => '1dc7dcd688bb551521ab434f57b7bf9d0091fcc9',
         'name' => 'flycart/woo_discount_rules_v2',
         'dev' => false,
     ),
@@ -16,7 +16,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd0892bb1a2a7e9bd983c1e8e72343589c5d81d6d',
+            'reference' => '1dc7dcd688bb551521ab434f57b7bf9d0091fcc9',
             'dev_requirement' => false,
         ),
         'vlucas/valitron' => array(

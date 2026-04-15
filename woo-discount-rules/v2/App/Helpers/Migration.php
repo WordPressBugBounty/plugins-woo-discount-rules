@@ -986,7 +986,7 @@ class Migration
         if(is_array($data)){
             return $data;
         } else if(is_serialized($data)){
-            return unserialize($data);
+            return unserialize($data, ['allowed_classes' => false]);
         } else {
             return json_decode($data);
         }
