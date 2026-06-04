@@ -3,6 +3,64 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 ?>
 <div class="wdr">
     <div class="wdr-alert-top-right" id="notify-msg-holder"></div>
+    <?php if ( ! \Wdr\App\Helpers\Helper::hasPro() ) : ?>
+    <div style="width:100%;box-sizing:border-box;background:linear-gradient(to right,#3a2db5,#6254f3);border-radius:8px;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px;box-shadow:0 2px 10px rgba(79,71,235,0.4);flex-wrap:nowrap;">
+        <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:0;">
+            <div style="flex-shrink:0;background:rgba(255,255,255,0.15);border-radius:50%;padding:8px;display:flex;align-items:center;justify-content:center;">
+                <svg style="width:20px;height:20px;" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <polyline points="20 12 20 22 4 22 4 12"/>
+                    <rect x="2" y="7" width="20" height="5"/>
+                    <line x1="12" y1="22" x2="12" y2="7"/>
+                    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+                    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                </svg>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:2px;min-width:0;">
+                <p style="margin:0;color:#fff;font-weight:600;font-size:13px;line-height:1.3;">
+                    <?php esc_html_e( 'Sell more with advanced discounts. Upgrade to Discount Rules PRO. Get 20% OFF on the PRO.', 'woo-discount-rules' ); ?>
+                </p>
+                <p style="margin:0;color:rgba(255,255,255,0.78);font-size:12px;line-height:1.4;">
+                    <?php esc_html_e( 'Go beyond simple coupons with BOGO, bulk pricing, scheduled sales, role-based discounts, and dynamic cart rules.', 'woo-discount-rules' ); ?>
+                </p>
+            </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;background:rgba(255,255,255,0.1);border:1px dashed rgba(255,255,255,0.4);border-radius:8px;padding:8px 12px;">
+            <span style="color:#fff;font-weight:600;font-size:12px;white-space:nowrap;"><?php esc_html_e( 'Coupon', 'woo-discount-rules' ); ?></span>
+            <span style="color:rgba(255,255,255,0.3);user-select:none;">|</span>
+            <span id="awdr-upgrade-coupon-code" style="color:#fff;font-family:monospace;font-weight:700;font-size:13px;letter-spacing:0.1em;background:rgba(255,255,255,0.12);padding:2px 8px;border-radius:4px;">UPGRADE20</span>
+            <button id="awdr-copy-coupon-btn" onclick="awdrCopyCoupon()" title="<?php esc_attr_e( 'Copy coupon code', 'woo-discount-rules' ); ?>" style="background:transparent;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;margin-left:2px;">
+                <svg id="awdr-copy-icon" style="width:16px;height:16px;" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8" viewBox="0 0 24 24">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+                </svg>
+                <svg id="awdr-check-icon" style="width:16px;height:16px;display:none;" fill="none" stroke="#86efac" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                </svg>
+            </button>
+        </div>
+        <a href="<?php echo esc_url( 'https://www.flycart.org/products/wordpress/woocommerce-discount-rules?utm_source=woo-discount-rules-v2&utm_medium=plugin&utm_campaign=upgrade_banner&utm_content=upgrade_pro' ); ?>" target="_blank" style="flex-shrink:0;background:#fff;color:#3a2db5;font-weight:600;font-size:13px;padding:8px 16px;border-radius:6px;text-decoration:none;white-space:nowrap;display:inline-block;">
+            <?php esc_html_e( 'Upgrade to PRO →', 'woo-discount-rules' ); ?>
+        </a>
+    </div>
+    <script>
+    function awdrCopyCoupon() {
+        var code = document.getElementById('awdr-upgrade-coupon-code').innerText;
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(code);
+        } else {
+            var el = document.createElement('textarea');
+            el.value = code; document.body.appendChild(el); el.select();
+            document.execCommand('copy'); document.body.removeChild(el);
+        }
+        document.getElementById('awdr-copy-icon').style.display = 'none';
+        document.getElementById('awdr-check-icon').style.display = 'inline';
+        setTimeout(function() {
+            document.getElementById('awdr-copy-icon').style.display = 'inline';
+            document.getElementById('awdr-check-icon').style.display = 'none';
+        }, 2000);
+    }
+    </script>
+    <?php endif; ?>
     <h2 class="wdr_tabs_container nav-tab-wrapper">
         <?php foreach ($tabs as $tab_key => $tab_handler) {
             $params = array(

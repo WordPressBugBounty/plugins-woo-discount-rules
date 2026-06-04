@@ -3,8 +3,8 @@ Contributors: flycart
 Donate link: https://flycart.org/
 Tags: woocommerce, coupons, discounts, dynamic pricing, bulk discount
 Requires at least: 4.6.1
-Tested up to: 6.9
-Stable tag: 2.6.15
+Tested up to: 7.0
+Stable tag: 2.6.16
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -291,9 +291,12 @@ In that case, the rule with the higher priority will be applied.
 * Dutch Translation - [@mvdburg1971](https://profiles.wordpress.org/mvdburg1971) - Michael van der Burg
 
 == Changelog ==
+= 2.6.16 - 28/05/26 =
+* Added: WooCommerce 10.8 compatibility.
+* Added: WordPress 7.0 compatibility.
 
 = 2.6.15 - 15/04/26 =
-* Fix: Unserialize warning while migrating data [Core].
+* Fix: Unserialize warning while migrating from V1 [Core].
 * Added: Compatibility for WooCommerce 10.7
 
 = 2.6.14 - 24/02/26 =
