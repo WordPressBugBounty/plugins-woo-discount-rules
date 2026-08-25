@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) {
 }
 
 use Wdr\App\Helpers\Template;
-$template_helper = new Template();
+$awdr_template_helper = new Template();
 ?>
 <br>
 <div id="wpbody-content" class="awdr-container" style="background-color: #ffffff;">
@@ -38,13 +38,13 @@ $template_helper = new Template();
             <div class="awdr_recipe_right">
                 <div class="awdr_recipe_main_content">
                     <?php
-                        $recipe_nonce = \Wdr\App\Helpers\Helper::create_nonce('common_recipe_nonce');
-                        $params['recipe_nonce'] = $recipe_nonce;
-                        $template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/SimpleDiscountRecipe.php' )->setData($params)->display();
-                        $template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/CartDiscountRecipe.php' )->setData($params)->display();
-                        $template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/BulkDiscountRecipe.php' )->setData($params)->display();
-                        $template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/BundleDiscountRecipe.php' )->setData($params)->display();
-                        $template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/BogoDiscountRecipe.php' )->setData($params)->display();
+                        $awdr_recipe_nonce = \Wdr\App\Helpers\Helper::create_nonce('common_recipe_nonce');
+                        $awdr_params['recipe_nonce'] = $awdr_recipe_nonce;
+                        $awdr_template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/SimpleDiscountRecipe.php' )->setData($awdr_params)->display();
+                        $awdr_template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/CartDiscountRecipe.php' )->setData($awdr_params)->display();
+                        $awdr_template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/BulkDiscountRecipe.php' )->setData($awdr_params)->display();
+                        $awdr_template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/BundleDiscountRecipe.php' )->setData($awdr_params)->display();
+                        $awdr_template_helper->setPath(WDR_PLUGIN_PATH . 'App/Views/Admin/Tabs/RecipeTypes/BogoDiscountRecipe.php' )->setData($awdr_params)->display();
                     ?>
                 </div>
             </div>

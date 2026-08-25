@@ -16,11 +16,11 @@ add_action('wp_ajax_awdr_switch_version', function (){
         if($version !== '' && $page !== ''){
             $url = esc_url(admin_url('admin.php?page=' . $page . '&awdr_switch_plugin_to=' . $version));
             $do_switch = true;
-            if (!isAWDREnvironmentCompatible()) {
+            if (!awdr_is_environment_compatible()) {
                 $return['message'] = 'Discount Rules 2.0 requires minimum PHP version of ' . ' ' . WDR_REQUIRED_PHP_VERSION;
                 wp_send_json_success($return);
             }
-            if (!isAWDRWooCompatible()) {
+            if (!awdr_is_woo_compatible()) {
                 $return['message'] = 'Discount Rules 2.0 requires at least Woocommerce' . ' ' . WDR_WC_REQUIRED_VERSION;
                 wp_send_json_success($return);
             }
@@ -116,8 +116,8 @@ Click the "Switch" button to start using the new interface.</p>
  * @since 1.0.0
  *
  */
-if(!function_exists('isAWDREnvironmentCompatible')){
-    function isAWDREnvironmentCompatible()
+if(!function_exists('awdr_is_environment_compatible')){
+    function awdr_is_environment_compatible()
     {
         return version_compare(PHP_VERSION, WDR_REQUIRED_PHP_VERSION, '>=');
     }
@@ -127,10 +127,10 @@ if(!function_exists('isAWDREnvironmentCompatible')){
  * Check the woocommerce is active or not
  * @return bool
  */
-if(!function_exists('isAWDRWooActive')){
-    function isAWDRWooActive()
+if(!function_exists('awdr_is_woo_active')){
+    function awdr_is_woo_active()
     {
-        $active_plugins = apply_filters('active_plugins', get_option('active_plugins', array()));
+        $active_plugins = apply_filters('active_plugins', get_option('active_plugins', array()));//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying WordPress core filter
         if (is_multisite()) {
             $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
         }
@@ -142,10 +142,10 @@ if(!function_exists('isAWDRWooActive')){
  * Check woocommerce version is compatibility
  * @return bool
  */
-if(!function_exists('isAWDRWooCompatible')){
-    function isAWDRWooCompatible()
+if(!function_exists('awdr_is_woo_compatible')){
+    function awdr_is_woo_compatible()
     {
-        $current_wc_version = getAWDRWooVersion();
+        $current_wc_version = awdr_get_woo_version();
         return version_compare($current_wc_version, WDR_WC_REQUIRED_VERSION, '>=');
     }
 }
@@ -154,8 +154,8 @@ if(!function_exists('isAWDRWooCompatible')){
  * get the version of woocommerce
  * @return mixed|null
  */
-if(!function_exists('getAWDRWooVersion')){
-    function getAWDRWooVersion()
+if(!function_exists('awdr_get_woo_version')){
+    function awdr_get_woo_version()
     {
         if (defined('WC_VERSION')) {
             return WC_VERSION;
@@ -180,8 +180,8 @@ if(!function_exists('getAWDRWooVersion')){
  * @since 1.0.0
  *
  */
-if(!function_exists('isAWDRWpCompatible')){
-    function isAWDRWpCompatible()
+if(!function_exists('awdr_is_wp_compatible')){
+    function awdr_is_wp_compatible()
     {
         $required_wp_version = 4.9;
         return version_compare(get_bloginfo('version'), $required_wp_version, '>=');
@@ -190,13 +190,13 @@ if(!function_exists('isAWDRWpCompatible')){
 
 if(!function_exists('awdr_check_compatible')){
     function awdr_check_compatible(){
-        if (!isAWDREnvironmentCompatible()) {
+        if (!awdr_is_environment_compatible()) {
             exit(esc_html('This plugin can not be activated because it requires minimum PHP version of ') . ' ' . esc_html(WDR_REQUIRED_PHP_VERSION));
         }
-        if (!isAWDRWooActive()) {
+        if (!awdr_is_woo_active()) {
             exit(esc_html('Woocommerce must installed and activated in-order to use Advanced woo discount rules!'));
         }
-        if (!isAWDRWooCompatible()) {
+        if (!awdr_is_woo_compatible()) {
             exit(esc_html(' Advanced woo discount rules requires at least Woocommerce') . ' ' . esc_html(WDR_WC_REQUIRED_VERSION));
         }
     }
@@ -205,8 +205,8 @@ if(!function_exists('awdr_check_compatible')){
 /**
  * For plugin translation
  * */
-add_action( 'plugins_loaded', function (){
+/*add_action( 'plugins_loaded', function (){
     if(function_exists('load_plugin_textdomain')){
         load_plugin_textdomain( 'woo-discount-rules', false, basename( dirname( __FILE__ ) ) . '/i18n/languages/' );
     }
-});
+});*/

@@ -8,15 +8,15 @@
     <div id="wpbody-content" class="awdr-container">
         <div class="awdr-compatible-form">
             <form name="compatible_form" id="compatible-form" method="post">
-                <?php $has_compatibility_plugin = false; ?>
+                <?php $awdr_has_compatibility_plugin = false; ?>
                 <h1><?php esc_html_e('Plugins Compatible with Discount Rules', 'woo-discount-rules') ?></h1>
                 <div class="awdr-compatible-field-container">
                     <?php
-                        $base->loadFields($has_compatibility_plugin);
+                        $base->loadFields($awdr_has_compatibility_plugin);
                      ?>
                 </div>
                 <?php
-                if($has_compatibility_plugin){
+                if($awdr_has_compatibility_plugin){
                     ?>
                     <div class="save-configuration">
                         <p class="submit">

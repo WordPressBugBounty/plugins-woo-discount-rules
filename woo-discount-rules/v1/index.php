@@ -4,8 +4,9 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
 /**
  * Plugin Directory URI.
  */
-define('WOO_DISCOUNT_URI', untrailingslashit(plugin_dir_url(__FILE__)));
 
+//define('WOO_DISCOUNT_URI', untrailingslashit(plugin_dir_url(__FILE__)));
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 Class WDRV1Deprecated {
 
     /**

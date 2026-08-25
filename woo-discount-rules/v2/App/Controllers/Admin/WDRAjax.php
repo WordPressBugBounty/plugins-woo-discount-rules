@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers\Admin;
 
 use WC_Data_Store;

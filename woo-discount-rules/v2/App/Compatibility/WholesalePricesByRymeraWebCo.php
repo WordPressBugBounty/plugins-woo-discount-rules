@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Compatibility;
 
 if (!defined('ABSPATH')) exit;
@@ -14,10 +14,10 @@ class WholesalePricesByRymeraWebCo extends Base
     public function run(){
         $value = $this->config->getConfigData($this->key, 0);
         if($value){
-            global $wdr_comp_disable_strikeout;
+            global $awdr_comp_disable_strikeout;
             add_filter('wwp_filter_wholesale_price_html', function($wholesale_price_html , $price , $product , $user_wholesale_role , $wholesale_price_title_text , $raw_wholesale_price , $source){
-                global $wdr_comp_disable_strikeout;
-                $wdr_comp_disable_strikeout[$product->get_id()] = true;
+                global $awdr_comp_disable_strikeout;
+                $awdr_comp_disable_strikeout[$product->get_id()] = true;
                 $result = apply_filters('advanced_woo_discount_rules_get_product_discount_price_from_custom_price', $raw_wholesale_price, $product, 1, $raw_wholesale_price, 'discounted_price', true);
                 if($result !== false){
                     /*To remove the original price strikeout un-comment the next line */
@@ -28,8 +28,8 @@ class WholesalePricesByRymeraWebCo extends Base
             }, 10, 7);
 
             add_filter('advanced_woo_discount_rules_modify_price_html', function($enable, $price_html, $product, $quantity){
-                global $wdr_comp_disable_strikeout;
-                if(isset($wdr_comp_disable_strikeout[$product->get_id()]) && $wdr_comp_disable_strikeout[$product->get_id()] == true){
+                global $awdr_comp_disable_strikeout;
+                if(isset($awdr_comp_disable_strikeout[$product->get_id()]) && $awdr_comp_disable_strikeout[$product->get_id()] == true){
                     $enable = false;
                 }
                 return $enable;

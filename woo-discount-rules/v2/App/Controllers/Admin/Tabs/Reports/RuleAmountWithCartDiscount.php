@@ -1,4 +1,5 @@
 <?php
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers\Admin\Tabs\Reports;
 
 if ( ! defined( 'ABSPATH' ) ) {

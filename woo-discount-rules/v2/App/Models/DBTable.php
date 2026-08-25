@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Models;
 
 use Wdr\App\Helpers\Language;
@@ -190,12 +190,15 @@ class DBTable
             }
             $current_time = current_time('timestamp');
             $current_language = Language::getCurrentLanguage();
-            $language_query = ' ORDER BY priority ASC';
+            $query = "SELECT * FROM {$wpdb->prefix}wdr_rules WHERE  enabled = %d AND deleted = %d AND (date_from <= %d OR date_from IS NULL) AND (date_to >= %d OR date_to IS NULL) AND (usage_limits > used_limits OR used_limits IS NULL OR usage_limits = 0)";
+            $query_args = array(1, 0, $current_time, $current_time);
             if (!empty($current_language)) {
-                $language_query = $wpdb->prepare(' AND (rule_language IS NULL OR rule_language = \'[]\' OR rule_language LIKE %s)','%' . $wpdb->esc_like($current_language) . '%').$language_query;
+                $query .= " AND (rule_language IS NULL OR rule_language = '[]' OR rule_language LIKE %s)";
+                $query_args[] = '%' . $wpdb->esc_like($current_language) . '%';
             }
-			//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery
-            return self::$rules['front_end'] = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE  enabled = %d AND deleted = %d AND (date_from <= %d OR date_from IS NULL) AND (date_to >= %d OR date_to IS NULL) AND (usage_limits > used_limits OR used_limits IS NULL OR usage_limits = 0)", array(1, 0, $current_time, $current_time)).$language_query, OBJECT);
+            $query .= ' ORDER BY priority ASC';
+			//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.NotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
+            return self::$rules['front_end'] = $wpdb->get_results($wpdb->prepare($query, $query_args), OBJECT);
         }
         /**
          * Need for Admin
@@ -276,11 +279,13 @@ class DBTable
                 self::resetRulePriorities();
                 update_option('awdr_priority_reset', 1);
             }
-            $query['result'] = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE {$where} ORDER BY priority ASC {$pagination}");//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	        //phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
+            $query['result'] = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE {$where} ORDER BY priority ASC {$pagination}");
         } else {
             $current_user = get_current_user_id();
             update_user_meta($current_user, 'awdr_filters', $awdr_filters);
-            $query['result'] = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE {$where} ORDER BY created_on DESC {$pagination}");//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	        //phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
+            $query['result'] = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE {$where} ORDER BY created_on DESC {$pagination}");
         }
         return $query;
     }
@@ -303,11 +308,12 @@ class DBTable
             $rule_ids = array_map('absint', $rule_ids);
             //$rule_ids = implode(",", $rule_ids);
 	        $rule_id_placeholder = implode(', ',array_fill(0, count($rule_ids), '%d'));
-            $rule_query = $wpdb->prepare("AND id > %d AND id IN ($rule_id_placeholder)",array_merge([0],$rule_ids));//phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	        //phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+            $rule_query = $wpdb->prepare("AND id > %d AND id IN ($rule_id_placeholder)",array_merge([0],$rule_ids));
         }
         $current_time = current_time('timestamp');
-
-        return self::$rules['on_sale_list'] = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE enabled = %d AND deleted = %d {$rule_query} AND (date_from <= %d OR date_from IS NULL) AND (date_to >= %d OR date_to IS NULL) AND (usage_limits > used_limits OR used_limits IS NULL OR usage_limits = 0)", array(1, 0, $current_time, $current_time)), OBJECT);//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
+        return self::$rules['on_sale_list'] = $wpdb->get_results($wpdb->prepare("SELECT * FROM {$wpdb->prefix}wdr_rules WHERE enabled = %d AND deleted = %d {$rule_query} AND (date_from <= %d OR date_from IS NULL) AND (date_to >= %d OR date_to IS NULL) AND (usage_limits > used_limits OR used_limits IS NULL OR usage_limits = 0)", array(1, 0, $current_time, $current_time)), OBJECT);
     }
 
     /**
@@ -580,7 +586,7 @@ class DBTable
 	    $summary_field = implode( '+', $summary_components );
         $table_items = $wpdb->prefix.self::RULES_TABLE_NAME;
         $table_stats = $wpdb->prefix.self::ORDER_ITEM_DISCOUNT_TABLE_NAME;
-		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
         $top = $wpdb->get_col( $wpdb->prepare("SELECT rules.id AS rule_id, SUM({$summary_field}) AS value FROM {$table_items} AS rules LEFT JOIN {$table_stats} AS rules_stats ON rules.id = rules_stats.rule_id WHERE DATE(rules_stats.created_at) BETWEEN %s AND %s GROUP BY rules.id HAVING value>0 ORDER BY value DESC LIMIT %d", array( $params['from'], $params['to'], (int) $params['limit'] )) );
         if ( empty( $top ) ) {
             return false;
@@ -588,11 +594,19 @@ class DBTable
 
         $placeholders = array_fill( 0, count( $top ), '%d' );
         $placeholders = implode( ', ', $placeholders );
-		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber
+		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber,PluginCheck.Security.DirectDB.UnescapedDBParameter
         $rows = $wpdb->get_results( $wpdb->prepare("SELECT DATE(rules_stats.created_at) as date_rep, rules.id AS rule_id, CONCAT('#', rules.id, ' ', rules.title) AS title, SUM({$summary_field}) AS value FROM {$table_items} AS rules LEFT JOIN {$table_stats} AS rules_stats ON rules.id = rules_stats.rule_id WHERE DATE(rules_stats.created_at) BETWEEN %s AND %s AND rules.id IN ({$placeholders}) GROUP BY date_rep, rule_id HAVING value>0 ORDER BY value DESC", array_merge( array( $params['from'], $params['to'] ), $top )) );
 
-	    //phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $info = $wpdb->get_row( $wpdb->prepare("SELECT COUNT(results.order_id) AS total_orders,SUM(results.discounted_amount) AS discounted_amount, SUM(results.revenue) AS revenue, SUM(results.free_shipping) as total_free_shipping FROM (SELECT rules_stats.order_id, SUM({$summary_field}) AS discounted_amount, post_meta.meta_value as revenue, SUM(CASE WHEN rules_stats.has_free_shipping = 'yes' THEN 1 ELSE 0 END) as free_shipping FROM {$table_stats} AS rules_stats LEFT JOIN {$wpdb->postmeta} as post_meta ON (rules_stats.order_id = post_meta.post_id AND post_meta.meta_key = '_order_total') WHERE DATE(rules_stats.created_at) BETWEEN %s AND %s GROUP BY rules_stats.order_id ) AS results", array( $params['from'], $params['to'])) );
+        if ( Woocommerce::customOrdersTableIsEnabled() ) {
+            $order_table = $wpdb->prefix . 'wc_orders';
+            $revenue_join = "LEFT JOIN {$order_table} as wc_order ON (rules_stats.order_id = wc_order.id)";
+            $revenue_field = 'wc_order.total_amount';
+        } else {
+            $revenue_join = "LEFT JOIN {$wpdb->postmeta} as post_meta ON (rules_stats.order_id = post_meta.post_id AND post_meta.meta_key = '_order_total')";
+            $revenue_field = 'post_meta.meta_value';
+        }
+	    //phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $info = $wpdb->get_row( $wpdb->prepare("SELECT COUNT(results.order_id) AS total_orders,SUM(results.discounted_amount) AS discounted_amount, SUM(results.revenue) AS revenue, SUM(results.free_shipping) as total_free_shipping FROM (SELECT rules_stats.order_id, SUM({$summary_field}) AS discounted_amount, {$revenue_field} as revenue, SUM(CASE WHEN rules_stats.has_free_shipping = 'yes' THEN 1 ELSE 0 END) as free_shipping FROM {$table_stats} AS rules_stats {$revenue_join} WHERE DATE(rules_stats.created_at) BETWEEN %s AND %s GROUP BY rules_stats.order_id ) AS results", array( $params['from'], $params['to'])) );
 
         return ['stats' => $rows, 'other' => $info];
     }
@@ -630,10 +644,18 @@ class DBTable
         $summary_field = implode( '+', $summary_components );
         $table_items = $wpdb->prefix.self::RULES_TABLE_NAME;
         $table_stats = $wpdb->prefix.self::ORDER_ITEM_DISCOUNT_TABLE_NAME;
-	    //phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	    //phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
         $rows = $wpdb->get_results( $wpdb->prepare("SELECT DATE(rules_stats.created_at) as date_rep, rules.id AS rule_id, CONCAT('#', rules.id, ' ', rules.title) AS title, SUM({$summary_field}) AS value FROM {$table_items} AS rules LEFT JOIN {$table_stats} AS rules_stats ON rules.id = rules_stats.rule_id WHERE rules.id={$rule_id} AND DATE(rules_stats.created_at) BETWEEN %s AND %s GROUP BY date_rep, rule_id, title ORDER BY value DESC", array( $params['from'], $params['to'] )) );
-		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        $info = $wpdb->get_row( $wpdb->prepare("SELECT COUNT(results.order_id) AS total_orders, SUM(results.discounted_amount) AS discounted_amount, SUM(results.revenue) AS revenue, SUM(results.free_shipping) as total_free_shipping FROM (SELECT rules_stats.order_id, SUM({$summary_field}) AS discounted_amount, post_meta.meta_value as revenue, SUM(CASE WHEN rules_stats.has_free_shipping = 'yes' THEN 1 ELSE 0 END) as free_shipping FROM {$table_stats} AS rules_stats LEFT JOIN {$wpdb->postmeta} as post_meta ON (rules_stats.order_id = post_meta.post_id AND post_meta.meta_key = '_order_total') WHERE rules_stats.rule_id={$rule_id} AND DATE(rules_stats.created_at) BETWEEN %s AND %s GROUP BY rules_stats.order_id ) AS results", array($params['from'], $params['to']) ) );
+        if ( Woocommerce::customOrdersTableIsEnabled() ) {
+            $order_table = $wpdb->prefix . 'wc_orders';
+            $revenue_join = "LEFT JOIN {$order_table} as wc_order ON (rules_stats.order_id = wc_order.id)";
+            $revenue_field = 'wc_order.total_amount';
+        } else {
+            $revenue_join = "LEFT JOIN {$wpdb->postmeta} as post_meta ON (rules_stats.order_id = post_meta.post_id AND post_meta.meta_key = '_order_total')";
+            $revenue_field = 'post_meta.meta_value';
+        }
+		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
+        $info = $wpdb->get_row( $wpdb->prepare("SELECT COUNT(results.order_id) AS total_orders, SUM(results.discounted_amount) AS discounted_amount, SUM(results.revenue) AS revenue, SUM(results.free_shipping) as total_free_shipping FROM (SELECT rules_stats.order_id, SUM({$summary_field}) AS discounted_amount, {$revenue_field} as revenue, SUM(CASE WHEN rules_stats.has_free_shipping = 'yes' THEN 1 ELSE 0 END) as free_shipping FROM {$table_stats} AS rules_stats {$revenue_join} WHERE rules_stats.rule_id={$rule_id} AND DATE(rules_stats.created_at) BETWEEN %s AND %s GROUP BY rules_stats.order_id ) AS results", array($params['from'], $params['to']) ) );
 
         return ['stats' => $rows, 'other' => $info];
     }
@@ -683,7 +705,7 @@ class DBTable
                 $where_query = $wpdb->prepare("cart_discount_label = %s", array($type));
         }
 
-		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		//phpcs:ignore WordPress.DB.DirectDatabaseQuery.NoCaching,WordPress.DB.DirectDatabaseQuery.DirectQuery,WordPress.DB.PreparedSQL.InterpolatedNotPrepared,PluginCheck.Security.DirectDB.UnescapedDBParameter
         $data = $wpdb->get_results( $wpdb->prepare("SELECT results.cart_discount_label as coupon_name, COUNT(results.order_id) AS total_orders, SUM(results.discounted_amount) AS discounted_amount FROM (SELECT order_id, SUM(`cart_discount`) AS discounted_amount, cart_discount_label FROM {$table_stats} WHERE {$where_query} AND DATE(created_at) BETWEEN %s AND %s GROUP BY order_id, cart_discount_label ) AS results GROUP BY results.cart_discount_label ORDER BY {$order_by} LIMIT 10", array( $params['from'], $params['to'])) );
         if ($data) {
             return $data;

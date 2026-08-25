@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers;
 
 use Wdr\App\Helpers\Helper;
@@ -1035,6 +1035,7 @@ class DiscountCalculator extends Base
                 if (!$rule->isEnabled()) {
                     continue;
                 }
+	            //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 	            if (apply_filters('wdr_is_stop_sale_price_strickout',false, $rule, $product, $sale_badge)) {
 		            continue;
 	            }

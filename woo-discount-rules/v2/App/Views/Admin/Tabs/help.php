@@ -195,20 +195,20 @@ if (!defined('ABSPATH')) {
                         </div>
                     </div>
                 </div>
-		        <?php foreach ($recommended_addon as  $slug => $recommendation) :?>
+		        <?php foreach ($recommended_addon as  $awdr_slug => $awdr_recommendation) :?>
                     <div class="awdr-pro-content-card card" style="float: right;">
                         <div class="card-body text-right">
                             <div class="awdr-pro-content-header">
                                 <div class="awdr-pro-content-icon">
-                                    <img src="<?php echo esc_url($recommendation['icon_url']); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	 ?>"
+                                    <img src="<?php echo esc_url($awdr_recommendation['icon_url']); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	 ?>"
                                          alt="discount-rule-icon" width="48" height="48">
                                 </div>
-                                <h2><?php echo esc_html($recommendation['name'], 'woo-discount-rules') // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText	?></h2>
+                                <h2><?php echo esc_html($awdr_recommendation['name'], 'woo-discount-rules') // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText	?></h2>
                             </div>
                             <div class="description" style="margin-bottom: 6px;">
-						        <?php echo esc_html($recommendation['description'], 'woo-discount-rules'); ?>
+						        <?php echo esc_html($awdr_recommendation['description'], 'woo-discount-rules'); ?>
                             </div>
-                            <a href="<?php echo esc_url($recommendation['plugin_url']); ?>"
+                            <a href="<?php echo esc_url($awdr_recommendation['plugin_url']); ?>"
                                class="btn btn-dark-blue"
                                target="_blank"><?php esc_html_e('Get Plugin', 'woo-discount-rules'); ?></a>
                         </div>

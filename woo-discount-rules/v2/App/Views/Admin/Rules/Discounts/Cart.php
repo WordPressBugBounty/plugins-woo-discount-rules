@@ -2,7 +2,7 @@
 if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
-$is_pro = \Wdr\App\Helpers\Helper::hasPro();
+$awdr_is_pro = \Wdr\App\Helpers\Helper::hasPro();
 ?>
 <div class="wdr_cart_discount">
     <div class="wdr-discount-group" data-index="1">
@@ -11,10 +11,10 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                 <div class="cart_discount_option wdr-select-filed-hight">
                     <select class="cart_free_shipping awdr-left-align"
                             name="cart_adjustments[type]">
-                        <option value="percentage" <?php echo (!empty($cart_adjustment) && isset($cart_adjustment->type) && $cart_adjustment->type == 'percentage') ? 'selected' : ''; ?>><?php esc_html_e('Percentage discount', 'woo-discount-rules'); ?></option>
-                        <option value="flat_in_subtotal" <?php echo (!empty($cart_adjustment) && isset($cart_adjustment->type) && $cart_adjustment->type == 'flat_in_subtotal') ? 'selected' : ''; ?>><?php esc_html_e('Fixed discount', 'woo-discount-rules'); ?></option>
-                        <?php if($is_pro){ ?>
-                            <option value="flat" <?php echo (!empty($cart_adjustment) && isset($cart_adjustment->type) && $cart_adjustment->type == 'flat') ? 'selected' : ''; ?>><?php esc_html_e('Fixed discount per product', 'woo-discount-rules'); ?></option>
+                        <option value="percentage" <?php echo (!empty($awdr_cart_adjustment) && isset($awdr_cart_adjustment->type) && $awdr_cart_adjustment->type == 'percentage') ? 'selected' : ''; ?>><?php esc_html_e('Percentage discount', 'woo-discount-rules'); ?></option>
+                        <option value="flat_in_subtotal" <?php echo (!empty($awdr_cart_adjustment) && isset($awdr_cart_adjustment->type) && $awdr_cart_adjustment->type == 'flat_in_subtotal') ? 'selected' : ''; ?>><?php esc_html_e('Fixed discount', 'woo-discount-rules'); ?></option>
+                        <?php if($awdr_is_pro){ ?>
+                            <option value="flat" <?php echo (!empty($awdr_cart_adjustment) && isset($awdr_cart_adjustment->type) && $awdr_cart_adjustment->type == 'flat') ? 'selected' : ''; ?>><?php esc_html_e('Fixed discount per product', 'woo-discount-rules'); ?></option>
                         <?php } else {
                             ?>
                             <option disabled><?php esc_html_e('Fixed discount per product -PRO-', 'woo-discount-rules'); ?></option>
@@ -27,7 +27,7 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                     <input name="cart_adjustments[value]"
                            type="number"
                            class="awdr_cart_discount_value awdr-left-align"
-                           value="<?php echo (isset($cart_adjustment->value)) ? esc_attr($cart_adjustment->value) : ''; ?>"
+                           value="<?php echo (isset($awdr_cart_adjustment->value)) ? esc_attr($awdr_cart_adjustment->value) : ''; ?>"
                            placeholder="0.00" min="0" step="any"
                            style="width: 100%;">
                     <span class="wdr_desc_text awdr-clear"><?php esc_html_e('Value', 'woo-discount-rules'); ?></span>
@@ -36,7 +36,7 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                     <input name="cart_adjustments[label]"
                            type="text"
                            class="awdr-left-align"
-                           value="<?php echo (isset($cart_adjustment->label)) ? esc_attr(wp_unslash($cart_adjustment->label)) : ''; ?>"
+                           value="<?php echo (isset($awdr_cart_adjustment->label)) ? esc_attr(wp_unslash($awdr_cart_adjustment->label)) : ''; ?>"
                            placeholder="<?php esc_html_e('Discount label', 'woo-discount-rules'); ?>"
                            style="width: 100%;">
                     <span class="wdr_desc_text awdr-clear"><?php esc_html_e('Discount Label', 'woo-discount-rules'); ?></span>

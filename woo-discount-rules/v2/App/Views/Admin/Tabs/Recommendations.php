@@ -1,7 +1,7 @@
 <?php
 defined('ABSPATH') || exit;
 
-$recommendations_list = !empty($wdr_recommendations_list) ? $wdr_recommendations_list : [];
+$awdr_recommendations_list = !empty($wdr_recommendations_list) ? $wdr_recommendations_list : [];
 ?>
 <style>
     .awdr-addons {
@@ -94,28 +94,28 @@ $recommendations_list = !empty($wdr_recommendations_list) ? $wdr_recommendations
 </style>
 
 <div class="awdr-addons">
-	<?php foreach ($recommendations_list as $slug => $recommendation) { ?>
+	<?php foreach ($awdr_recommendations_list as $awdr_slug => $awdr_recommendation) { ?>
 		<div class="awdr-addon">
-			<img class="banner" src="<?php echo esc_url($recommendation['banner_image']); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>"
-			     alt="<?php echo esc_attr($recommendation['name'], 'woo-discount-rules'); ?>">
+			<img class="banner" src="<?php echo esc_url($awdr_recommendation['banner_image']); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>"
+			     alt="<?php echo esc_attr($awdr_recommendation['name'], 'woo-discount-rules'); ?>">
 
 			<div class="addon-content">
 				<div class="awdr-addon-header">
 					<div class="awdr-addon-icon">
-						<img src="<?php echo esc_url($recommendation['icon_url']); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>"
-						     alt="<?php echo esc_attr($recommendation['name'], 'woo-discount-rules'); ?>" width="48" height="48">
+						<img src="<?php echo esc_url($awdr_recommendation['icon_url']); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>"
+						     alt="<?php echo esc_attr($awdr_recommendation['name'], 'woo-discount-rules'); ?>" width="48" height="48">
 					</div>
-					<h2><?php echo esc_html($recommendation['name']); ?></h2>
+					<h2><?php echo esc_html($awdr_recommendation['name']); ?></h2>
 				</div>
 				<div class="description">
-					<?php echo esc_html($recommendation['description'], 'woo-discount-rules'); ?>
+					<?php echo esc_html($awdr_recommendation['description']); ?>
 				</div>
 			</div>
 
 			<div class="addon-actions">
-				<?php if (!empty($recommendation['plugin_url'])):  ?>
-					<a href="<?php echo esc_url($recommendation['plugin_url']); ?>" target="_blank">
-						<?php echo esc_html('Get Plugin', 'woo-discount-rules'); ?>
+				<?php if (!empty($awdr_recommendation['plugin_url'])):  ?>
+					<a href="<?php echo esc_url($awdr_recommendation['plugin_url']); ?>" target="_blank">
+						<?php echo esc_html__('Get Plugin', 'woo-discount-rules'); ?>
 					</a>
 				<?php endif; ?>
 			</div>

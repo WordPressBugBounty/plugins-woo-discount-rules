@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Helpers;
 use Wdr\App\Controllers\Configuration;
 use Wdr\App\Controllers\ManageDiscount;
@@ -271,7 +272,7 @@ class Helper
             $coupon_name_from_config = Configuration::getInstance()->getConfig('discount_label_for_combined_discounts', __('Cart discount', 'woo-discount-rules'));
             $coupon_names[] = (empty($coupon_name_from_config))? __('Cart discount', 'woo-discount-rules'): $coupon_name_from_config;
             foreach ($coupon_names as $key => $coupon_name){
-                $coupon_names[$key] = apply_filters('woocommerce_coupon_code', $coupon_name);
+                $coupon_names[$key] = apply_filters('woocommerce_coupon_code', $coupon_name);//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying third-party filter for compatibility
             }
             self::$available_coupon_names = $coupon_names;
         }

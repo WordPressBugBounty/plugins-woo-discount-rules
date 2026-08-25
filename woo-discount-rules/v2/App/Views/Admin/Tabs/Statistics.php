@@ -3,7 +3,7 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-$is_pro = Wdr\App\Helpers\Helper::hasPro();
+$awdr_is_pro = Wdr\App\Helpers\Helper::hasPro();
 ?>
 <style>
     .chart-options select {
@@ -154,10 +154,10 @@ $is_pro = Wdr\App\Helpers\Helper::hasPro();
                 </div>
                 <div class="awdr-report-type" >
                     <select name="type" class="chart-type awdr-show-report-limit">
-                        <?php foreach ( $charts as $group => $charts_by_group ): ?>
-                            <optgroup label="<?php echo esc_attr($group); ?>">
-                                <?php foreach ( $charts_by_group as $key => $name ): ?>
-                                    <option value="<?php echo esc_attr($key) ?>"><?php echo esc_html($name) ?></option>
+                        <?php foreach ( $charts as $awdr_group => $awdr_charts_by_group ): ?>
+                            <optgroup label="<?php echo esc_attr($awdr_group); ?>">
+                                <?php foreach ( $awdr_charts_by_group as $awdr_key => $awdr_name ): ?>
+                                    <option value="<?php echo esc_attr($awdr_key) ?>"><?php echo esc_html($awdr_name) ?></option>
                                 <?php endforeach; ?>
                             </optgroup>
                         <?php endforeach; ?>
@@ -182,7 +182,7 @@ $is_pro = Wdr\App\Helpers\Helper::hasPro();
                 <h4><?php esc_html_e("Discounted amount", 'woo-discount-rules'); ?></h4>
                 <h4 id="discounted-amount">-</h4>
             </div>
-            <?php if ($is_pro) { ?>
+            <?php if ($awdr_is_pro) { ?>
                 <div class="wdr-card total-free-shipping">
                     <h4><?php esc_html_e("Orders with free shipping", 'woo-discount-rules'); ?></h4>
                     <h4 id="total-free-shipping">-</h4>
@@ -224,11 +224,11 @@ $is_pro = Wdr\App\Helpers\Helper::hasPro();
                 </div>
                 <div class="awdr-coupon-type" >
                     <select name="type" class="chart-type awdr-show-report-limit">
-                        <?php foreach ( $coupons as $group => $charts_by_group ): ?>
-                            <optgroup label="<?php echo esc_attr($group); ?>">
-                                <?php foreach ( $charts_by_group as $key => $name ): ?>
-                                    <?php if ($group != __('Coupon', 'woo-discount-rules')) $key = $name; ?>
-                                    <option value="<?php echo esc_attr($key) ?>"><?php echo esc_html($name) ?></option>
+                        <?php foreach ( $coupons as $awdr_group => $awdr_charts_by_group ): ?>
+                            <optgroup label="<?php echo esc_attr($awdr_group); ?>">
+                                <?php foreach ( $awdr_charts_by_group as $awdr_key => $awdr_name ): ?>
+                                    <?php if ($awdr_group != __('Coupon', 'woo-discount-rules')) $awdr_key = $awdr_name; ?>
+                                    <option value="<?php echo esc_attr($awdr_key) ?>"><?php echo esc_html($awdr_name) ?></option>
                                 <?php endforeach; ?>
                             </optgroup>
                         <?php endforeach; ?>

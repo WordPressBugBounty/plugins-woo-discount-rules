@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Helpers;
 
 use stdClass;
@@ -1325,7 +1326,7 @@ class Rule
                 if ($type == 'cart_coupon' && $operator == 'custom_coupon' && $coupon_name != '') {
                     $coupon_name = trim($coupon_name);
                     //$coupon_name = str_replace(' ', '', $coupon_name);
-                    $coupon_name = apply_filters('woocommerce_coupon_code', $coupon_name);
+                    $coupon_name = apply_filters('woocommerce_coupon_code', $coupon_name);//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying third-party filter for compatibility
                     if (Woocommerce::checkCouponAlreadyExistsInWooCommerce($coupon_name)) {
                         return array(
                             'rule_id' => $rule_id,

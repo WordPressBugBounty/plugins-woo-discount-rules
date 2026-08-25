@@ -62,31 +62,31 @@ if (!defined('ABSPATH')) exit; // Exit if accessed directly
     </script>
     <?php endif; ?>
     <h2 class="wdr_tabs_container nav-tab-wrapper">
-        <?php foreach ($tabs as $tab_key => $tab_handler) {
-            $params = array(
+        <?php foreach ($tabs as $awdr_tab_key => $awdr_tab_handler) {
+            $awdr_params = array(
                 'page' => WDR_SLUG,
-                'tab' => $tab_key
+                'tab' => $awdr_tab_key
             );
-            $target = '';
-            $link = admin_url('admin.php?' . http_build_query($params));
-            // if ($tab_key === 'help') {
-            //$link = 'https://docs.flycart.org/en/collections/806883-discount-rules-for-woocommerce';
-            //  $target = 'target="_blank"';
+            $awdr_target = '';
+            $awdr_link = admin_url('admin.php?' . http_build_query($awdr_params));
+            // if ($awdr_tab_key === 'help') {
+            //$awdr_link = 'https://docs.flycart.org/en/collections/806883-discount-rules-for-woocommerce';
+            //  $awdr_target = 'target="_blank"';
             //  }
             ?>
-            <a class="nav-tab <?php echo esc_attr(($tab_key === $current_tab ? 'nav-tab-active' : '')); ?>"
-               style="<?php echo ($tab_key === 'help') ? 'background: cornflowerblue;color: white;' : ''; ?>"
-               href="<?php echo esc_url($link); ?>" <?php echo esc_attr($target); ?>><?php echo esc_html($tab_handler->title); ?></a>
+            <a class="nav-tab <?php echo esc_attr(($awdr_tab_key === $current_tab ? 'nav-tab-active' : '')); ?>"
+               style="<?php echo ($awdr_tab_key === 'help') ? 'background: cornflowerblue;color: white;' : ''; ?>"
+               href="<?php echo esc_url($awdr_link); ?>" <?php echo esc_attr($awdr_target); ?>><?php echo esc_html($awdr_tab_handler->title); ?></a>
         <?php } ?>
         <span class="awdr_version_text"> <?php echo esc_html('v' . (defined('WDR_VERSION') ? WDR_VERSION : '2.0.0 + ') . ' '); ?> </span>
         <?php
         if (isset($on_sale_page_rebuild['available']) && $on_sale_page_rebuild['available']) {
-            $additional_class_for_rebuild = '';
+            $awdr_additional_class_for_rebuild = '';
             if ($on_sale_page_rebuild['required_rebuild'] === true) {
-                $additional_class_for_rebuild = ' need_attention';
+                $awdr_additional_class_for_rebuild = ' need_attention';
             }
             ?>
-            <span class="awdr_rebuild_on_sale_rule_page_con<?php echo esc_attr($additional_class_for_rebuild); ?>">
+            <span class="awdr_rebuild_on_sale_rule_page_con<?php echo esc_attr($awdr_additional_class_for_rebuild); ?>">
                 <button type="button" class="btn btn-danger"
                         id="awdr_rebuild_on_sale_list_on_rule_page" data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_rule_build_index')); ?>"><?php esc_html_e('Rebuild index', 'woo-discount-rules'); ?></button>
             </span>

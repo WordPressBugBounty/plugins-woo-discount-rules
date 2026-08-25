@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers\Admin;
 
 use Wdr\App\Controllers\Admin\Tabs\Addons;
@@ -68,7 +68,7 @@ class Settings extends Base
                 }
             }
             $redirect_url = admin_url('admin.php?page=woo_discount_rules&tab=addons');
-            wp_redirect(add_query_arg('addon_activated', $activated, $redirect_url));
+	        wp_safe_redirect(add_query_arg('addon_activated', $activated, $redirect_url));
             exit;
         } elseif (isset($_GET['deactivate_addon'])) {
             $deactivated = 0;
@@ -82,7 +82,7 @@ class Settings extends Base
                 }
             }
             $redirect_url = admin_url('admin.php?page=woo_discount_rules&tab=addons');
-            wp_redirect(add_query_arg('addon_deactivated', $deactivated, $redirect_url));
+	        wp_safe_redirect(add_query_arg('addon_deactivated', $deactivated, $redirect_url));
             exit;
         }
     }
@@ -236,7 +236,7 @@ class Settings extends Base
         }
 
         if (!empty($addons)) {
-            $active_plugins = apply_filters('active_plugins', get_option('active_plugins', array()));
+            $active_plugins = apply_filters('active_plugins', get_option('active_plugins', array()));//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying WordPress core filter
             if (is_multisite()) {
                 $active_plugins = array_merge($active_plugins, get_site_option('active_sitewide_plugins', array()));
             }
@@ -320,7 +320,7 @@ class Settings extends Base
 	        //phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
             wp_enqueue_script(WDR_SLUG . '-rulebuilder', WDR_PLUGIN_URL . 'Assets/Js/rulebuilder'.$minified_text.'.js', array('jquery', WDR_SLUG . '-datetimepickerjs'), WDR_VERSION);
         }
-        if(version_compare(getAWDRWooVersion(), '3.2.0', '<')){
+        if(version_compare(awdr_get_woo_version(), '3.2.0', '<')){
 			//phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
             wp_enqueue_script('selectWoo', WDR_PLUGIN_URL . 'Assets/Js/selectWoo.full.min.js', array('jquery'), WDR_VERSION);
         }

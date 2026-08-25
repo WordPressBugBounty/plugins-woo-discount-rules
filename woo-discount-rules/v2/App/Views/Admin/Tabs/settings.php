@@ -75,12 +75,12 @@
                         </td>
                         <td>
                             <?php
-                            $disable_coupon_when_rule_applied = $configuration->getConfig('disable_coupon_when_rule_applied', 'run_both');
+                            $awdr_disable_coupon_when_rule_applied = $configuration->getConfig('disable_coupon_when_rule_applied', 'run_both');
                             ?>
                             <select name="disable_coupon_when_rule_applied" class="disable_coupon_when_rule_applied">
-                                <option value="run_both" <?php echo ($disable_coupon_when_rule_applied == 'run_both') ? 'selected' : ''; ?>><?php esc_html_e('Let both coupons and discount rules run together', 'woo-discount-rules');   ?></option>
-                                <option value="disable_coupon" <?php echo ($disable_coupon_when_rule_applied == 'disable_coupon') ? 'selected' : ''; ?>><?php esc_html_e('Disable the coupons (discount rules will work)', 'woo-discount-rules');   ?></option>
-                                <option value="disable_rules" <?php echo ($disable_coupon_when_rule_applied == 'disable_rules') ? 'selected' : ''; ?> ><?php esc_html_e('Disable the discount rules (coupons will work)', 'woo-discount-rules');   ?></option>
+                                <option value="run_both" <?php echo ($awdr_disable_coupon_when_rule_applied == 'run_both') ? 'selected' : ''; ?>><?php esc_html_e('Let both coupons and discount rules run together', 'woo-discount-rules');   ?></option>
+                                <option value="disable_coupon" <?php echo ($awdr_disable_coupon_when_rule_applied == 'disable_coupon') ? 'selected' : ''; ?>><?php esc_html_e('Disable the coupons (discount rules will work)', 'woo-discount-rules');   ?></option>
+                                <option value="disable_rules" <?php echo ($awdr_disable_coupon_when_rule_applied == 'disable_rules') ? 'selected' : ''; ?> ><?php esc_html_e('Disable the discount rules (coupons will work)', 'woo-discount-rules');   ?></option>
                             </select>
                         </td>
                     </tr>
@@ -147,42 +147,42 @@
                         </td>
                         <td>
                             <?php
-                            $show_on_sale_badge = $configuration->getConfig('show_on_sale_badge', 'disabled');
+                            $awdr_show_on_sale_badge = $configuration->getConfig('show_on_sale_badge', 'disabled');
                             ?>
                             <select name="show_on_sale_badge" class="on_sale_badge_condition">
-                                <option value="when_condition_matches" <?php echo ($show_on_sale_badge == 'when_condition_matches') ? 'selected' : ''; ?> ><?php esc_html_e('Show only after a rule condition is matched exactly', 'woo-discount-rules');   ?></option>
-                                <option value="at_least_has_any_rules" <?php echo ($show_on_sale_badge == 'at_least_has_any_rules') ? 'selected' : ''; ?>><?php esc_html_e('Show on products that are covered under any discount rule in the plugin', 'woo-discount-rules');   ?></option>
-                                <option value="disabled" <?php echo ($show_on_sale_badge == 'disabled') ? 'selected' : ''; ?>><?php esc_html_e('Do not show', 'woo-discount-rules');   ?></option>
+                                <option value="when_condition_matches" <?php echo ($awdr_show_on_sale_badge == 'when_condition_matches') ? 'selected' : ''; ?> ><?php esc_html_e('Show only after a rule condition is matched exactly', 'woo-discount-rules');   ?></option>
+                                <option value="at_least_has_any_rules" <?php echo ($awdr_show_on_sale_badge == 'at_least_has_any_rules') ? 'selected' : ''; ?>><?php esc_html_e('Show on products that are covered under any discount rule in the plugin', 'woo-discount-rules');   ?></option>
+                                <option value="disabled" <?php echo ($awdr_show_on_sale_badge == 'disabled') ? 'selected' : ''; ?>><?php esc_html_e('Do not show', 'woo-discount-rules');   ?></option>
                              </select>
                         </td>
                     </tr>
-                    <tr class="sale_badge_toggle" style="<?php echo ($show_on_sale_badge == 'disabled')? 'display:none;':''?>">
+                    <tr class="sale_badge_toggle" style="<?php echo ($awdr_show_on_sale_badge == 'disabled')? 'display:none;':''?>">
                         <td scope="row">
                             <label for="" class="awdr-left-align"><?php esc_html_e('Do you want to customize the sale badge?', 'woo-discount-rules')   ?></label>
                             <span class="wdr_settings_desc_text awdr-clear-both"><?php  esc_html_e('Customize the sale badge', 'woo-discount-rules');   ?></span>
                         </td>
                         <td>
                             <?php
-                            $customize_on_sale_badge = $configuration->getConfig('customize_on_sale_badge', '');
-                            $force_override_on_sale_badge = $configuration->getConfig('force_override_on_sale_badge', '');
-                            $display_percentage_on_sale_badge = $configuration->getConfig('display_percentage_on_sale_badge', '');
+                            $awdr_customize_on_sale_badge = $configuration->getConfig('customize_on_sale_badge', '');
+                            $awdr_force_override_on_sale_badge = $configuration->getConfig('force_override_on_sale_badge', '');
+                            $awdr_display_percentage_on_sale_badge = $configuration->getConfig('display_percentage_on_sale_badge', '');
                             ?>
                             <input type="checkbox" name="customize_on_sale_badge" id="customize_on_sale_badge"
-                                   value="1" <?php echo ( $customize_on_sale_badge == 1 ? 'checked' : '') ?>><label
+                                   value="1" <?php echo ( $awdr_customize_on_sale_badge == 1 ? 'checked' : '') ?>><label
                                     for="customize_on_sale_badge" class="padding10"><?php esc_html_e('Yes, I would like to customize the sale badge', 'woo-discount-rules');   ?></label>
                             <br>
                             <input type="checkbox" name="force_override_on_sale_badge" id="force_override_on_sale_badge"
-                                   value="1" <?php echo ( $force_override_on_sale_badge == 1 ? 'checked' : '') ?>><label
+                                   value="1" <?php echo ( $awdr_force_override_on_sale_badge == 1 ? 'checked' : '') ?>><label
                                     for="force_override_on_sale_badge" class="padding10"><?php esc_html_e('Force override the label for sale badge (useful when your theme has override for sale badge).', 'woo-discount-rules');   ?></label>
                             <br>
                             <div class="display_percentage_on_sale_badge_con">
                             <input type="checkbox" name="display_percentage_on_sale_badge" id="display_percentage_on_sale_badge"
-                                   value="1" <?php echo ( $display_percentage_on_sale_badge == 1 ? 'checked' : '') ?>><label
+                                   value="1" <?php echo ( $awdr_display_percentage_on_sale_badge == 1 ? 'checked' : '') ?>><label
                                 for="display_percentage_on_sale_badge" class="padding10"><?php esc_html_e('I would like to display percentage in sale badge (Displays only when rule matches else displays default sale badge content).', 'woo-discount-rules');   ?></label>
                             </div>
                         </td>
                     </tr>
-                    <tr class="sale_badge_customizer" style="<?php echo ($show_on_sale_badge != 'disabled' && $customize_on_sale_badge == 1) ? '':'display:none;'?>">
+                    <tr class="sale_badge_customizer" style="<?php echo ($awdr_show_on_sale_badge != 'disabled' && $awdr_customize_on_sale_badge == 1) ? '':'display:none;'?>">
                         <td scope="row">
                             <label for="" class="awdr-left-align"><?php esc_html_e('Sale badge content', 'woo-discount-rules')   ?></label>
                             <span class="wdr_settings_desc_text awdr-clear-both">
@@ -201,7 +201,7 @@
                                       cols="30"><?php echo wp_kses_post($configuration->getConfig('on_sale_badge_html', '<span class="onsale">Sale!</span>')); ?></textarea>
                         </td>
                     </tr>
-                    <tr class="sale_badge_percentage_customizer" style="<?php echo ($show_on_sale_badge != 'disabled' && $display_percentage_on_sale_badge == 1) ? '':'display:none;'?>">
+                    <tr class="sale_badge_percentage_customizer" style="<?php echo ($awdr_show_on_sale_badge != 'disabled' && $awdr_display_percentage_on_sale_badge == 1) ? '':'display:none;'?>">
                         <td scope="row">
                             <label for="" class="awdr-left-align"><?php esc_html_e('Sale badge percentage content', 'woo-discount-rules')   ?></label>
                             <span class="wdr_settings_desc_text awdr-clear-both">
@@ -420,12 +420,12 @@
                             <span class="wdr_settings_desc_text awdr-clear-both"><?php  esc_html_e('Choose pages to show the banner. Only available for subtotal or item quantity based discount rules.', 'woo-discount-rules');   ?></span>
                         </td>
                         <td>
-                            <?php $show_promo_text = $configuration->getConfig('show_promo_text', ''); ?>
+                            <?php $awdr_show_promo_text = $configuration->getConfig('show_promo_text', ''); ?>
                             <select name="show_promo_text[]" multiple class="edit-all-loaded-values" id="show_promo_text" data-placeholder="<?php esc_attr_e("Select the page to display promotion message", 'woo-discount-rules');  ?>">
-                                <option value="shop_page" <?php echo (!empty($show_promo_text) && is_array($show_promo_text) && in_array('shop_page', $show_promo_text)) ? 'selected' : ''; ?>><?php esc_html_e('Shop page', 'woo-discount-rules');  ?></option>
-                                <option value="product_page" <?php echo (!empty($show_promo_text) && is_array($show_promo_text) && in_array('product_page', $show_promo_text)) ? 'selected' : ''; ?> ><?php esc_html_e('Product page', 'woo-discount-rules');  ?></option>
-                                <option value="cart_page" <?php echo (!empty($show_promo_text) && is_array($show_promo_text) && in_array('cart_page', $show_promo_text)) ? 'selected' : ''; ?> ><?php esc_html_e('Cart page', 'woo-discount-rules');  ?></option>
-                                <option value="checkout_page" <?php echo (!empty($show_promo_text) && is_array($show_promo_text) && in_array('checkout_page', $show_promo_text)) ? 'selected' : ''; ?> ><?php esc_html_e('Checkout page', 'woo-discount-rules');  ?></option>
+                                <option value="shop_page" <?php echo (!empty($awdr_show_promo_text) && is_array($awdr_show_promo_text) && in_array('shop_page', $awdr_show_promo_text)) ? 'selected' : ''; ?>><?php esc_html_e('Shop page', 'woo-discount-rules');  ?></option>
+                                <option value="product_page" <?php echo (!empty($awdr_show_promo_text) && is_array($awdr_show_promo_text) && in_array('product_page', $awdr_show_promo_text)) ? 'selected' : ''; ?> ><?php esc_html_e('Product page', 'woo-discount-rules');  ?></option>
+                                <option value="cart_page" <?php echo (!empty($awdr_show_promo_text) && is_array($awdr_show_promo_text) && in_array('cart_page', $awdr_show_promo_text)) ? 'selected' : ''; ?> ><?php esc_html_e('Cart page', 'woo-discount-rules');  ?></option>
+                                <option value="checkout_page" <?php echo (!empty($awdr_show_promo_text) && is_array($awdr_show_promo_text) && in_array('checkout_page', $awdr_show_promo_text)) ? 'selected' : ''; ?> ><?php esc_html_e('Checkout page', 'woo-discount-rules');  ?></option>
                             </select>
                         </td>
                     </tr>
@@ -478,8 +478,8 @@
                         </td>
                         <td>
                             <textarea name="applied_rule_message" rows="5" cols="30"><?php
-                                $user_message = $configuration->getConfig('applied_rule_message', 'Discount <strong>{{title}}</strong> has been applied to your cart.');
-                                echo wp_kses_post(__($user_message, 'woo-discount-rules')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText?>
+                                $awdr_user_message = $configuration->getConfig('applied_rule_message', 'Discount <strong>{{title}}</strong> has been applied to your cart.');
+                                echo wp_kses_post(__($awdr_user_message, 'woo-discount-rules')); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText?>
                             </textarea>
                         </td>
                     </tr>
@@ -569,18 +569,18 @@
                                             } ?>
                                         ><?php  esc_html_e("All active rules", 'woo-discount-rules');   ?></option>
                                         <?php
-                                        $rules = \Wdr\App\Controllers\ManageDiscount::$available_rules;
-                                        if(!empty($rules) && is_array($rules)){
-                                            foreach ($rules as $rule){
-                                                if($rule->rule->enabled == 1){
+                                        $awdr_rules = \Wdr\App\Controllers\ManageDiscount::$available_rules;
+                                        if(!empty($awdr_rules) && is_array($awdr_rules)){
+                                            foreach ($awdr_rules as $awdr_rule){
+                                                if($awdr_rule->rule->enabled == 1){
                                                     ?>
-                                                    <option value="<?php echo esc_attr($rule->rule->id); ?>"
+                                                    <option value="<?php echo esc_attr($awdr_rule->rule->id); ?>"
                                                     <?php if(!empty($awdr_rebuild_on_sale_rules) && is_array($awdr_rebuild_on_sale_rules)){
-                                                        if(in_array($rule->rule->id, $awdr_rebuild_on_sale_rules)){
+                                                        if(in_array($awdr_rule->rule->id, $awdr_rebuild_on_sale_rules)){
                                                             echo ' selected ';
                                                         }
                                                     } ?>
-                                                    ><?php echo esc_html($rule->rule->title); ?></option>
+                                                    ><?php echo esc_html($awdr_rule->rule->title); ?></option>
                                                     <?php
                                                 }
                                             }
@@ -821,43 +821,43 @@
                                         </div>
 
                                         <div class="wdr_customize_table" style="background-color: #fff;"><?php
-                                            $tbl_title = $configuration->getConfig('customize_bulk_table_title', 0);
-                                            $tbl_range = $configuration->getConfig('customize_bulk_table_range', 1);
-                                            $tbl_discount = $configuration->getConfig('customize_bulk_table_discount', 2);
+                                            $awdr_tbl_title = $configuration->getConfig('customize_bulk_table_title', 0);
+                                            $awdr_tbl_range = $configuration->getConfig('customize_bulk_table_range', 1);
+                                            $awdr_tbl_discount = $configuration->getConfig('customize_bulk_table_discount', 2);
 
 
-                                            $tbl_title_text = $configuration->getConfig('table_title_column_name', 'Title');
-                                            $tbl_discount_text = $configuration->getConfig('table_discount_column_name', 'Discount');
-                                            $tbl_range_text = $configuration->getConfig('table_range_column_name', 'Range');
+                                            $awdr_tbl_title_text = $configuration->getConfig('table_title_column_name', 'Title');
+                                            $awdr_tbl_discount_text = $configuration->getConfig('table_discount_column_name', 'Discount');
+                                            $awdr_tbl_range_text = $configuration->getConfig('table_range_column_name', 'Range');
 
-                                            $table_sort_by_columns = array(
-                                                'tbl_title' => $tbl_title,
-                                                'tbl_range' => $tbl_range,
-                                                'tbl_discount' => $tbl_discount,
+                                            $awdr_table_sort_by_columns = array(
+                                                'tbl_title' => $awdr_tbl_title,
+                                                'tbl_range' => $awdr_tbl_range,
+                                                'tbl_discount' => $awdr_tbl_discount,
                                             );
-                                            asort($table_sort_by_columns);
+                                            asort($awdr_table_sort_by_columns);
                                             ?>
                                             <table id="sort_customizable_table" class="wdr_bulk_table_msg sar-table">
                                                 <thead class="wdr_bulk_table_thead">
                                                     <tr class="wdr_bulk_table_tr wdr_bulk_table_thead" style="">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {
                                                                 ?>
                                                             <th id="customize-bulk-table-title" class="wdr_bulk_table_td popup_table_title_column awdr-dragable"
                                                                 style="<?php if(!$configuration->getConfig('table_column_header', 0)){
                                                                     echo 'display:none';
                                                                 }else{
                                                                     echo((!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '');
-                                                                } ?>"><span class="title_on_keyup"><?php esc_html_e($tbl_title_text, 'woo-discount-rules')  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText?></span>
+                                                                } ?>"><span class="title_on_keyup"><?php esc_html_e($awdr_tbl_title_text, 'woo-discount-rules')  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText?></span>
                                                                 </th><?php
-                                                            } elseif ($column == "tbl_discount") {
+                                                            } elseif ($awdr_column == "tbl_discount") {
                                                                 ?>
                                                             <th id="customize-bulk-table-discount" class="wdr_bulk_table_td popup_table_discount_column awdr-dragable"
                                                                 style="<?php if(!$configuration->getConfig('table_column_header', 0)){
                                                                     echo 'display:none';
                                                                 }else{
                                                                     echo((!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '');
-                                                                } ?>"><span class="discount_on_keyup"><?php esc_html_e($tbl_discount_text, 'woo-discount-rules')  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span>
+                                                                } ?>"><span class="discount_on_keyup"><?php esc_html_e($awdr_tbl_discount_text, 'woo-discount-rules')  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span>
                                                                 </th><?php
                                                             } else {
                                                                 ?>
@@ -866,21 +866,21 @@
                                                                     echo 'display:none';
                                                                 }else{
                                                                     echo((!$configuration->getConfig('table_range_column', 0)) ? 'display:none' : '');
-                                                                }?>"><span class="range_on_keyup"><?php esc_html_e($tbl_range_text, 'woo-discount-rules')  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span></th><?php
+                                                                }?>"><span class="range_on_keyup"><?php esc_html_e($awdr_tbl_range_text, 'woo-discount-rules')  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span></th><?php
                                                             }
                                                         }?>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Bulk Rule', 'woo-discount-rules');   ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>"><?php
@@ -896,14 +896,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Bulk Rule', 'woo-discount-rules');   ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>">
@@ -919,14 +919,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Bulk Flat discount', 'woo-discount-rules');   ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>"><?php
@@ -942,14 +942,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Bulk percentage discount', 'woo-discount-rules');   ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>">
@@ -964,14 +964,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Bulk % discount', 'woo-discount-rules');   ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>">
@@ -986,14 +986,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Bulk flat', 'woo-discount-rules');  ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>"><?php
@@ -1010,15 +1010,15 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('set percentage discount', 'woo-discount-rules'); 
                                                                 ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>">
@@ -1033,14 +1033,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('Fixed discount for set', 'woo-discount-rules');  ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>"><?php
@@ -1055,14 +1055,14 @@
                                                         }?>
                                                     </tr>
                                                     <tr class="wdr_bulk_table_tr bulk_table_row">
-                                                        <?php foreach ($table_sort_by_columns as $column => $order) {
-                                                            if ($column == "tbl_title") {?>
+                                                        <?php foreach ($awdr_table_sort_by_columns as $awdr_column => $order) {
+                                                            if ($awdr_column == "tbl_title") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_title popup_table_title_column col_index_1" data-colindex="1"
                                                                 style="<?php echo (!$configuration->getConfig('table_title_column', 0)) ? 'display:none' : '';?>">
                                                                 <?php esc_html_e('set flat discount', 'woo-discount-rules'); ?>
                                                                 </td><?php
 
-                                                            } elseif ($column == "tbl_discount") {?>
+                                                            } elseif ($awdr_column == "tbl_discount") {?>
                                                             <td class="wdr_bulk_table_td wdr_bulk_table_discount  popup_table_discount_column col_index_2" data-colindex="2"
                                                                 style="<?php echo (!$configuration->getConfig('table_discount_column', 0)) ? 'display:none' : '';?>">
                                                                 <span class="wdr_table_discounted_value" style="<?php echo ( !$configuration->getConfig('table_discount_column_value', 0)) ? 'display: none' : '';?>"><?php

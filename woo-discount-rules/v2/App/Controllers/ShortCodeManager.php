@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers;
 
 use Wdr\App\Helpers\Woocommerce;
@@ -365,6 +365,7 @@ class ShortCodeManager extends ManageDiscount
             }
             $products = new \WP_Query($query_arguments);
             $columns = absint($short_code_attributes['columns']);
+	        //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
             $woocommerce_loop['columns'] = $columns;
             if ($products->have_posts()) {
                 self::$woocommerce_helper->setLoopProperties('is_shortcode', true);
@@ -375,6 +376,7 @@ class ShortCodeManager extends ManageDiscount
                 self::$woocommerce_helper->setLoopProperties('total', $total);
                 $total_pages = ceil($total / $short_code_attributes['per_page']);
                 self::$woocommerce_helper->setLoopProperties('total_pages', $total_pages);
+	            //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                 do_action('woocommerce_before_shop_loop');
                 self::$woocommerce_helper->productLoopStart();
                 while ($products->have_posts()) {
@@ -382,10 +384,12 @@ class ShortCodeManager extends ManageDiscount
                     wc_get_template_part('content', 'product');
                 }
                 self::$woocommerce_helper->productLoopEnd();
+	            //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                 do_action('woocommerce_after_shop_loop');
                 // woocommerce_pagination();
                 wp_reset_postdata();
             } else {
+	            //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                 do_action('woocommerce_no_products_found');
             }
             return '<div class="woocommerce columns-' . $columns . '">' . ob_get_clean() . '</div>';
@@ -398,7 +402,7 @@ class ShortCodeManager extends ManageDiscount
      * @param $short_code_attributes
      * @return string
      */
-    function saleItemsList_old($short_code_attributes)
+    /*function saleItemsList_old($short_code_attributes)
     {
         if (!empty(self::$available_rules)) {
             global $woocommerce_loop;
@@ -551,7 +555,7 @@ class ShortCodeManager extends ManageDiscount
             return '<div class="woocommerce columns-' . $columns . '">' . ob_get_clean() . '</div>';
         }
         return NULL;
-    }
+    }*/
 
     function bannerContent(){
         echo "";

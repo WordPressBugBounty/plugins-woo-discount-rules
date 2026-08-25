@@ -3,13 +3,10 @@ if (!defined('ABSPATH')) {
     exit; // Exit if accessed directly
 }
 
-$operator = isset($options->operator) ? $options->operator : 'less_than';
-$subtotal_promotion_from = isset($options->subtotal_promotion_from) ? $options->subtotal_promotion_from : false;
-$subtotal_promotion_message = isset($options->subtotal_promotion_message) ? wp_unslash($options->subtotal_promotion_message) : false;
+$awdr_subtotal_promotion_from = isset($options->subtotal_promotion_from) ? $options->subtotal_promotion_from : false;
+$awdr_subtotal_promotion_message = isset($options->subtotal_promotion_message) ? wp_unslash($options->subtotal_promotion_message) : false;
 echo ($render_saved_condition == true) ? '' : '<div class="wdr-subtotal-promo-messeage-main">';
-if($render_saved_condition != true && isset($i)){
-    $i = '{i}';
-}
+$awdr_condition_index = ($render_saved_condition == true && isset($i)) ? $i : '{i}';
 
 ?>
 
@@ -17,9 +14,9 @@ if($render_saved_condition != true && isset($i)){
         <label style="padding-bottom: 20px;"><b><?php esc_html_e('Promotion Message', 'woo-discount-rules'); ?></b></label>
         <div class="wdr_cart_subtotal_promo_from">
             <label class="awdr-left-align wdr_subtotal_promo_filed_name" style="padding-right: 5px;"><?php esc_html_e('Subtotal from', 'woo-discount-rules'); ?></label>
-            <input name="conditions[<?php echo (isset($i)) ? esc_attr($i) : '{i}' ?>][options][subtotal_promotion_from]"
+            <input name="conditions[<?php echo esc_attr($awdr_condition_index) ?>][options][subtotal_promotion_from]"
                    type="text" class="float_only_field awdr-left-align"
-                   value="<?php echo ($subtotal_promotion_from) ? esc_attr($subtotal_promotion_from) : '' ?>"
+                   value="<?php echo ($awdr_subtotal_promotion_from) ? esc_attr($awdr_subtotal_promotion_from) : '' ?>"
                    placeholder="<?php esc_attr_e('0.00', 'woo-discount-rules');?>"
                    min="0">
             <span class="wdr_desc_text awdr-clear-both"><?php esc_html_e('Set a threshold from which you want to start showing promotion message', 'woo-discount-rules'); ?></span>
@@ -28,9 +25,9 @@ if($render_saved_condition != true && isset($i)){
         <div class="wdr_cart_subtotal_promo_msg">
             <p class="wdr_subtotal_promo_filed_name"><?php esc_html_e('Message', 'woo-discount-rules'); ?></p>
             <textarea
-                name="conditions[<?php echo (isset($i)) ? esc_attr($i) : '{i}' ?>][options][subtotal_promotion_message]"
+                name="conditions[<?php echo esc_attr($awdr_condition_index) ?>][options][subtotal_promotion_message]"
                 style="height: 60px;"
-                placeholder="<?php esc_attr_e('Spend {{difference_amount}} more and get 10% discount', 'woo-discount-rules'); ?>"><?php echo ($subtotal_promotion_message) ? esc_html($subtotal_promotion_message) : ''; ?></textarea>
+                placeholder="<?php esc_attr_e('Spend {{difference_amount}} more and get 10% discount', 'woo-discount-rules'); ?>"><?php echo ($awdr_subtotal_promotion_message) ? esc_html($awdr_subtotal_promotion_message) : ''; ?></textarea>
             <span class="wdr_desc_text awdr-clear-both"><?php esc_html_e('{{difference_amount}} -> Difference amount to get discount', 'woo-discount-rules'); ?></span>
             <span class="wdr_desc_text awdr-clear-both"><?php echo wp_kses_post(__('<b>Eg:</b> Spend {{difference_amount}} more and get 10% discount', 'woo-discount-rules')); ?></span>
         </div>

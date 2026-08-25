@@ -1,10 +1,10 @@
 <?php
 if (!defined('ABSPATH')) exit;
 
-$rules_count = isset($rule_count) && !empty($rule_count) ? $rule_count : 0 ;
-$total_page = isset($total_count) && !empty($total_count) ? $total_count : 0 ;
-$recommended_addon = isset($recommended_addon) && !empty($recommended_addon) ?  $recommended_addon: [] ;
-$is_pro = \Wdr\App\Helpers\Helper::hasPro();
+$awdr_rules_count = isset($rule_count) && !empty($rule_count) ? $rule_count : 0 ;
+$awdr_total_page = isset($total_count) && !empty($total_count) ? $total_count : 0 ;
+$awdr_recommended_addon = isset($recommended_addon) && !empty($recommended_addon) ?  $recommended_addon: [] ;
+$awdr_is_pro = \Wdr\App\Helpers\Helper::hasPro();
 ?>
 <br>
 <div id="wpbody-content" class="awdr-container">
@@ -68,15 +68,15 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
 
         <br/>
         <?php
-        $page_limit = !empty($input->get('limit')) ? $input->get('limit') : $limit ;
-        $page_sort = !empty($input->get('sort')) ? $input->get('sort') : $sort ;
+        $awdr_page_limit = !empty($input->get('limit')) ? $input->get('limit') : $limit ;
+        $awdr_page_sort = !empty($input->get('sort')) ? $input->get('sort') : $sort ;
         ?>
         <form id="wdr-search-top" method="get" style="display: none">
             <input type="hidden" name="adminUrl"
                    value="<?php echo esc_url(admin_url('admin.php?page=woo_discount_rules')); ?>">
                 <input type="hidden" name="name" value="<?php echo esc_attr($input->get('name')); ?>" class="wdr-rule-search-key">
-                 <input type="hidden" name="limit" value="<?php echo esc_attr($page_limit); ?>" class="wdr-rule-limit-key">
-                 <input type="hidden" name="total_page" value="<?php echo esc_attr($total_page); ?>" class="wdr-rule-limit-key">
+                 <input type="hidden" name="limit" value="<?php echo esc_attr($awdr_page_limit); ?>" class="wdr-rule-limit-key">
+                 <input type="hidden" name="total_page" value="<?php echo esc_attr($awdr_total_page); ?>" class="wdr-rule-limit-key">
                 <input type="hidden" name="awdr_nonce" value="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('awdr_ajax_search_rule')); ?>">
                 <input type="submit" class="button" class="wdr-trigger-search-key"
                        value="<?php esc_html_e('Search Rules', 'woo-discount-rules'); ?>">
@@ -107,20 +107,20 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
 
 
                     <select name="awdr-hidden-limit" id="awdr_limit" class="awdr-hidden-rule-limit page_limit">
-                        <option value="20" <?php echo ($page_limit == 20) ? 'selected' : '';?> >20</option>
-                        <option value="50" <?php echo ($page_limit == 50) ? 'selected' : '';?> >50</option>
-                        <option value="100" <?php echo ($page_limit == 100) ? 'selected' : '';?> >100</option>
-                        <option value="all" <?php echo ($page_limit == 'all') ? 'selected' : '';?> ><?php esc_html_e('All', 'woo-discount-rules'); ?> </option>
+                        <option value="20" <?php echo ($awdr_page_limit == 20) ? 'selected' : '';?> >20</option>
+                        <option value="50" <?php echo ($awdr_page_limit == 50) ? 'selected' : '';?> >50</option>
+                        <option value="100" <?php echo ($awdr_page_limit == 100) ? 'selected' : '';?> >100</option>
+                        <option value="all" <?php echo ($awdr_page_limit == 'all') ? 'selected' : '';?> ><?php esc_html_e('All', 'woo-discount-rules'); ?> </option>
                     </select>
                 </div>
                 <div class="tablenav-pages one-page">
-                <span class="displaying-num"><?php echo esc_html($rules_count) . ' ';
-                    ($rules_count == 0 || $rules_count == 1) ? esc_html_e('item', 'woo-discount-rules') : esc_html_e('items', 'woo-discount-rules'); ?></span>
+                <span class="displaying-num"><?php echo esc_html($awdr_rules_count) . ' ';
+                    ($awdr_rules_count == 0 || $awdr_rules_count == 1) ? esc_html_e('item', 'woo-discount-rules') : esc_html_e('items', 'woo-discount-rules'); ?></span>
                     <?php include 'pagination.php'; ?>
                 </div>
                 <br class="clear">
             </div>
-            <input type="hidden" name="sort"  id="page_sort" value="<?php echo esc_attr($page_sort); ?>" class="wdr-rule-limit-key">
+            <input type="hidden" name="sort"  id="page_sort" value="<?php echo esc_attr($awdr_page_sort); ?>" class="wdr-rule-limit-key">
             <table class="wp-list-table widefat fixed posts">
                 <thead>
                 <tr>
@@ -159,12 +159,12 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                 </thead>
                 <tbody class="wdr-ruleboard" id="sortable"><?php
                 if ($rules) {
-                    foreach ($rules as $rule_row) { ?>
-                        <tr id="<?php echo esc_attr($rule_row->getId()); ?>"  data-priority="<?php echo esc_attr($rule_row->rule->priority); ?>" class="awdr-listing-rule-tr">
+                    foreach ($rules as $awdr_rule_row) { ?>
+                        <tr id="<?php echo esc_attr($awdr_rule_row->getId()); ?>"  data-priority="<?php echo esc_attr($awdr_rule_row->rule->priority); ?>" class="awdr-listing-rule-tr">
                             <th scope="row" class="check-column awdr-listing-rule-check-box-align">
-                                <input id="cb-select-<?php echo esc_attr($rule_row->getId()); ?>" class="wdr-rules-selector"
+                                <input id="cb-select-<?php echo esc_attr($awdr_rule_row->getId()); ?>" class="wdr-rules-selector"
                                        type="checkbox" name="saved_rules[]"
-                                       value="<?php echo esc_attr($rule_row->getId()); ?>">
+                                       value="<?php echo esc_attr($awdr_rule_row->getId()); ?>">
                             </th>
                             <th scope="row" class="check-column awdr-listing-rule-check-box-align" aria-disabled="false">
                                 <span class="dashicons dashicons-menu awdr-sortable-handle" style="padding-left: 25px;"></span>
@@ -173,109 +173,109 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                                 data-colname="Title">
                                 <strong>
                                     <a class="row-title"
-                                       href="<?php echo esc_url(admin_url("admin.php?" . http_build_query(array('page' => WDR_SLUG, 'tab' => 'rules', 'task' => 'view', 'id' => $rule_row->getId() ,'page_no' => $current_page)))); ?>"
-                                       aria-label="“<?php echo esc_attr($rule_row->getTitle()); ?>” (Edit)"><?php echo esc_html($rule_row->getTitle());
-                                       if($rule_row->isExclusive()) {?>
+                                       href="<?php echo esc_url(admin_url("admin.php?" . http_build_query(array('page' => WDR_SLUG, 'tab' => 'rules', 'task' => 'view', 'id' => $awdr_rule_row->getId() ,'page_no' => $current_page)))); ?>"
+                                       aria-label="“<?php echo esc_attr($awdr_rule_row->getTitle()); ?>” (Edit)"><?php echo esc_html($awdr_rule_row->getTitle());
+                                       if($awdr_rule_row->isExclusive()) {?>
                                                <span class="awdr-exclusive-disable-listing"><?php esc_html_e('Exclusive', 'woo-discount-rules'); ?></span> <?php
                                        }?></a>
                                 </strong>
                                 <div class="awdr_created_date_html">
                                     <?php
-                                    $created_by = $rule_row->getRuleCreatedBy();
-                                    if ($created_by) {
+                                    $awdr_created_by = $awdr_rule_row->getRuleCreatedBy();
+                                    if ($awdr_created_by) {
                                         if (function_exists('get_userdata')) {
-                                            if ($user = get_userdata($created_by)) {
-                                                if (isset($user->data->display_name)) {
-                                                    $created_by = $user->data->display_name;
+                                            if ($awdr_user = get_userdata($awdr_created_by)) {
+                                                if (isset($awdr_user->data->display_name)) {
+                                                    $awdr_created_by = $awdr_user->data->display_name;
                                                 }
                                             }
                                         }
                                     }
-                                    $created_on = $rule_row->getRuleCreatedOn();
+                                    $awdr_created_on = $awdr_rule_row->getRuleCreatedOn();
 
-                                    $modified_by = $rule_row->getRuleModifiedBy();
-                                    if ($modified_by) {
+                                    $awdr_modified_by = $awdr_rule_row->getRuleModifiedBy();
+                                    if ($awdr_modified_by) {
                                         if (function_exists('get_userdata')) {
-                                            if ($user = get_userdata($modified_by)) {
-                                                if (isset($user->data->display_name)) {
-                                                    $modified_by = $user->data->display_name;
+                                            if ($awdr_user = get_userdata($awdr_modified_by)) {
+                                                if (isset($awdr_user->data->display_name)) {
+                                                    $awdr_modified_by = $awdr_user->data->display_name;
                                                 }
                                             }
                                         }
                                     }
-                                    $modified_on = $rule_row->getRuleModifiedOn();
-                                    if ($created_by && !empty($created_by) && !empty($created_on)) { ?>
+                                    $awdr_modified_on = $awdr_rule_row->getRuleModifiedOn();
+                                    if ($awdr_created_by && !empty($awdr_created_by) && !empty($awdr_created_on)) { ?>
                                         <span class="wdr_desc_text">
                                         <?php
                                         /* translators: %s used to display created user.*/
-                                        echo esc_html(sprintf(__('Created by: %s', 'woo-discount-rules'),$created_by)); ?>
+                                        echo esc_html(sprintf(__('Created by: %s', 'woo-discount-rules'),$awdr_created_by)); ?>
                                         ,<?php
 	                                    /* translators: %s used to display created/modified On*/
-                                        echo esc_html(sprintf(__('On: %s', 'woo-discount-rules'),$created_on)); ?> &nbsp;</span><?php }
-                                    if ($modified_by && !empty($modified_by) && !empty($modified_on)) {
+                                        echo esc_html(sprintf(__('On: %s', 'woo-discount-rules'),$awdr_created_on)); ?> &nbsp;</span><?php }
+                                    if ($awdr_modified_by && !empty($awdr_modified_by) && !empty($awdr_modified_on)) {
                                         ?>
                                         <span class="wdr_desc_text"><?php
 	                                    /* translators: %s used to display Modified user.*/
-                                        echo esc_html(sprintf(__('Modified by: %s', 'woo-discount-rules'),$modified_by));?>
+                                        echo esc_html(sprintf(__('Modified by: %s', 'woo-discount-rules'),$awdr_modified_by));?>
                                         ,<?php
 	                                    /* translators: %s used to display created/modified On*/
-	                                    echo esc_html(sprintf(__('On: %s', 'woo-discount-rules'),$modified_on)); ?> </span><?php
+	                                    echo esc_html(sprintf(__('On: %s', 'woo-discount-rules'),$awdr_modified_on)); ?> </span><?php
                                     } ?>
                                 </div>
                             </td>
                             <td class="author column-author" data-colname="Author"><?php
-                                $get_discount_type = $rule_row->getRuleDiscountType();
-                                $discount_type_name = '-';
-                                switch ($get_discount_type) {
+                                $awdr_get_discount_type = $awdr_rule_row->getRuleDiscountType();
+                                $awdr_discount_type_name = '-';
+                                switch ($awdr_get_discount_type) {
                                     case'wdr_simple_discount':
-                                        $discount_type_name = __('Product Adjustment', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Product Adjustment', 'woo-discount-rules');
                                         break;
                                     case'wdr_cart_discount':
-                                        $discount_type_name = __('Cart Adjustment', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Cart Adjustment', 'woo-discount-rules');
                                         break;
                                     case'wdr_free_shipping':
-                                        $discount_type_name = __('Free Shipping', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Free Shipping', 'woo-discount-rules');
                                         break;
                                     case'wdr_bulk_discount':
-                                        $discount_type_name = __('Bulk Discount', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Bulk Discount', 'woo-discount-rules');
                                         break;
                                     case'wdr_set_discount':
-                                        $discount_type_name = __('Set Discount', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Set Discount', 'woo-discount-rules');
                                         break;
                                     case'wdr_buy_x_get_x_discount':
-                                        $discount_type_name = __('Buy X get X', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Buy X get X', 'woo-discount-rules');
                                         break;
                                     case'wdr_buy_x_get_y_discount':
-                                        $discount_type_name = __('Buy X get Y', 'woo-discount-rules');
+                                        $awdr_discount_type_name = __('Buy X get Y', 'woo-discount-rules');
                                         break;
                                 }
                                 ?>
-                                <abbr><?php echo esc_html($discount_type_name); ?></abbr>
+                                <abbr><?php echo esc_html($awdr_discount_type_name); ?></abbr>
                             </td>
                             <td class="author column-author" data-colname="Author"><?php
-                                $get_start_date = $rule_row->getStartDate($timestamp = false, $format = "Y-m-d H:i");
+                                $awdr_get_start_date = $awdr_rule_row->getStartDate( false, "Y-m-d H:i");
                                 ?>
-                                <abbr><?php echo is_null($get_start_date) ? '-' : esc_html($get_start_date); ?></abbr>
+                                <abbr><?php echo is_null($awdr_get_start_date) ? '-' : esc_html($awdr_get_start_date); ?></abbr>
                             </td>
                             <td class="date column-date" data-colname="Date"><?php
-                                $get_end_date = $rule_row->getEndDate($timestamp = false, $format = "Y-m-d H:i");
+                                $awdr_get_end_date = $awdr_rule_row->getEndDate(false, "Y-m-d H:i");
                                 ?>
-                                <abbr><?php echo is_null($get_end_date) ? '-' : esc_html($get_end_date); ?></abbr>
+                                <abbr><?php echo is_null($awdr_get_end_date) ? '-' : esc_html($awdr_get_end_date); ?></abbr>
                             </td>
                             <?php
                             if (count($site_languages) > 1) {
                                 ?>
                                 <td>
                                     <?php
-                                    $chosen_languages = $rule_row->getLanguages();
-                                    if (!empty($chosen_languages)) {
-                                        $i = 1;
-                                        foreach ($chosen_languages as $language) {
-                                            echo isset($site_languages[$language]) ? esc_html($site_languages[$language]) : '';
-                                            if (count($chosen_languages) > $i) {
+                                    $awdr_chosen_languages = $awdr_rule_row->getLanguages();
+                                    if (!empty($awdr_chosen_languages)) {
+                                        $awdr_i = 1;
+                                        foreach ($awdr_chosen_languages as $awdr_language) {
+                                            echo isset($site_languages[$awdr_language]) ? esc_html($site_languages[$awdr_language]) : '';
+                                            if (count($awdr_chosen_languages) > $awdr_i) {
                                                 echo ', ';
                                             }
-                                            $i++;
+                                            $awdr_i++;
                                         }
                                     } else {
                                         echo '-';
@@ -288,18 +288,18 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                             <!-- <td></td>-->
                             <td class="date column-tag" data-colname="wdr-rule-status">
                                 <label class="switch switch-left-right">
-                                    <input class="switch-input wdr_manage_status" name="toogle_action" type="checkbox" data-awdr_="<?php echo esc_attr($rule_row->getId()); ?>" data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_manage_status'.$rule_row->getId())); ?>" data-manage-status="<?php echo esc_attr($rule_row->getId()); ?>" <?php echo ($rule_row->isEnabled()) ? 'checked' : '';?>/>
+                                    <input class="switch-input wdr_manage_status" name="toogle_action" type="checkbox" data-awdr_="<?php echo esc_attr($awdr_rule_row->getId()); ?>" data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_manage_status'.$awdr_rule_row->getId())); ?>" data-manage-status="<?php echo esc_attr($awdr_rule_row->getId()); ?>" <?php echo ($awdr_rule_row->isEnabled()) ? 'checked' : '';?>/>
                                     <span class="switch-label" data-on="<?php esc_attr_e('Enabled', 'woo-discount-rules'); ?>" data-off="<?php esc_attr_e('Disabled', 'woo-discount-rules'); ?>"></span>
                                     <span class="switch-handle"></span>
                                 </label>
-                                    <span class="awdr-enabled-status" style="<?php echo (!$rule_row->isEnabled()) ? 'display:none' : '';?>">
+                                    <span class="awdr-enabled-status" style="<?php echo (!$awdr_rule_row->isEnabled()) ? 'display:none' : '';?>">
                                     <?php
-                                    $rule_status = $rule_row->getRuleVaildStatus();
-                                    $check_rule_limit = $rule_row->checkRuleUsageLimits();
-                                    $current_time_stamp = current_time('timestamp');
-                                    $current_time = $rule_row->formatDate($current_time_stamp, $format = "Y-m-d H:i", false);
-                                    if($rule_status == 'in_future'){
-                                        if ($check_rule_limit == 'Disabled') { ?>
+                                    $awdr_rule_status = $awdr_rule_row->getRuleVaildStatus();
+                                    $awdr_check_rule_limit = $awdr_rule_row->checkRuleUsageLimits();
+                                    $awdr_current_time_stamp = current_time('timestamp');
+                                    $awdr_current_time = $awdr_rule_row->formatDate($awdr_current_time_stamp, "Y-m-d H:i", false);
+                                    if($awdr_rule_status == 'in_future'){
+                                        if ($awdr_check_rule_limit == 'Disabled') { ?>
                                             <span class="awdr-listing-status-text"><?php esc_html_e(' - ( Not running )', 'woo-discount-rules');?></span><br>
                                                 <span class="awdr-text-warning"><b><?php esc_html_e('Rule reached maximum usage limit', 'woo-discount-rules');?> </b>
                                                 </span><?php
@@ -307,14 +307,14 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                                         } else { ?>
                                             <span class="awdr-listing-status-text"><?php esc_html_e(' - ( Will run in future)', 'woo-discount-rules'); ?></span>
                                             <br><?php
-                                            if (isset($current_time) && !empty($current_time)) {
+                                            if (isset($awdr_current_time) && !empty($awdr_current_time)) {
                                                 ?>
-                                                <span class="awdr-text-warning"><b><?php esc_html_e('Your server current date and time:', 'woo-discount-rules');?> </b><?php echo esc_html($current_time); ?>
+                                                <span class="awdr-text-warning"><b><?php esc_html_e('Your server current date and time:', 'woo-discount-rules');?> </b><?php echo esc_html($awdr_current_time); ?>
                                                 </span><?php
                                             }
                                         }
-                                    } elseif ($rule_status == 'expired') {
-                                        if ($check_rule_limit == 'Disabled') { ?>
+                                    } elseif ($awdr_rule_status == 'expired') {
+                                        if ($awdr_check_rule_limit == 'Disabled') { ?>
                                             <span class="awdr-listing-status-text"><?php esc_html_e(' - ( Not running )', 'woo-discount-rules'); ?></span>
                                             <br>
                                             <span class="awdr-text-warning">
@@ -323,14 +323,14 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                                         } else { ?>
                                             <span class="awdr-listing-status-text"><?php esc_html_e(' - ( Not running - validity expired)', 'woo-discount-rules'); ?></span>
                                             <br><?php
-                                            if (isset($current_time) && !empty($current_time)) {
+                                            if (isset($awdr_current_time) && !empty($awdr_current_time)) {
                                                 ?>
-                                                <span class="awdr-text-warning"><b><?php esc_html_e('Your server current date and time:', 'woo-discount-rules');?> </b><?php echo esc_html($current_time); ?>
+                                                <span class="awdr-text-warning"><b><?php esc_html_e('Your server current date and time:', 'woo-discount-rules');?> </b><?php echo esc_html($awdr_current_time); ?>
                                                 </span><?php
                                             }
                                         }
                                     } else {
-                                        if ($check_rule_limit == 'Disabled') { ?>
+                                        if ($awdr_check_rule_limit == 'Disabled') { ?>
                                             <span class="awdr-listing-status-text"><?php esc_html_e(' - ( Not running )', 'woo-discount-rules'); ?></span>
                                             <br>
                                             <span class="awdr-text-warning">
@@ -344,15 +344,15 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                             </td>
                             <td class="awdr-rule-buttons">
                                 <a class="btn btn-primary"
-                                   href="<?php echo esc_url(admin_url("admin.php?" . http_build_query(array('page' => WDR_SLUG, 'tab' => 'rules', 'task' => 'view', 'id' => $rule_row->getId())))); ?>">
+                                   href="<?php echo esc_url(admin_url("admin.php?" . http_build_query(array('page' => WDR_SLUG, 'tab' => 'rules', 'task' => 'view', 'id' => $awdr_rule_row->getId())))); ?>">
                                     <?php esc_html_e('Edit', 'woo-discount-rules'); ?></a>
                                 <a class="btn btn-primary wdr_duplicate_rule"
-                                   data-duplicate-rule="<?php echo esc_attr($rule_row->getId()); ?>"
-                                   data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_duplicate_rule' . $rule_row->getId())); ?>"><?php esc_html_e('Duplicate', 'woo-discount-rules'); ?></a>
+                                   data-duplicate-rule="<?php echo esc_attr($awdr_rule_row->getId()); ?>"
+                                   data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_duplicate_rule' . $awdr_rule_row->getId())); ?>"><?php esc_html_e('Duplicate', 'woo-discount-rules'); ?></a>
                                 <a class="btn btn-danger wdr_delete_rule"
-                                   data-delete-rule="<?php echo esc_attr($rule_row->getId()); ?>"
-                                   data-priority="<?php echo esc_attr($rule_row->rule->priority); ?>"
-                                   data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_delete_rule' . $rule_row->getId())); ?>">
+                                   data-delete-rule="<?php echo esc_attr($awdr_rule_row->getId()); ?>"
+                                   data-priority="<?php echo esc_attr($awdr_rule_row->rule->priority); ?>"
+                                   data-awdr_nonce="<?php echo esc_attr(\Wdr\App\Helpers\Helper::create_nonce('wdr_ajax_delete_rule' . $awdr_rule_row->getId())); ?>">
                                     <?php esc_html_e('Delete', 'woo-discount-rules'); ?></a>
                             </td>
                         </tr>
@@ -416,8 +416,8 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                 </div>
                 <div class="alignleft actions">
                 </div>
-                <div class="tablenav-pages one-page"><span class="displaying-num"><?php echo esc_html($rules_count) . ' ';
-                        ($rules_count == 0 || $rules_count == 1) ? esc_html_e('item', 'woo-discount-rules') : esc_html_e('items', 'woo-discount-rules'); ?></span></span>
+                <div class="tablenav-pages one-page"><span class="displaying-num"><?php echo esc_html($awdr_rules_count) . ' ';
+                        ($awdr_rules_count == 0 || $awdr_rules_count == 1) ? esc_html_e('item', 'woo-discount-rules') : esc_html_e('items', 'woo-discount-rules'); ?></span></span>
                     <?php include 'pagination.php'; ?>
                 </div>
                 <br class="clear">
@@ -429,13 +429,13 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
         </form>
         <br class="clear">
     </div>
-	<?php  if($page_limit != 'all' && $total_count > 1) : ?>
+	<?php  if($awdr_page_limit != 'all' && $total_count > 1) : ?>
     </div>
     </div>
 	<?php endif;?>
 
     <?php
-    if (!$is_pro) {?>
+    if (!$awdr_is_pro) {?>
         <div class="awdr-pro-content-card-list">
             <div class="awdr-pro-content-card card" style="float: right;">
                 <div class="card-body text-right">
@@ -480,21 +480,21 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
                 </div>
             </div>
         <?php } ?>
-            <?php foreach ($recommended_addon as  $slug => $recommendation) :?>
+            <?php foreach ($awdr_recommended_addon as  $awdr_slug => $awdr_recommendation) :?>
     <div class="awdr-pro-content-card-list">
             <div class="awdr-pro-content-card card" style="float: right;">
                 <div class="card-body text-right">
                     <div class="awdr-pro-content-header">
                         <div class="awdr-pro-content-icon">
-                            <img src="<?php echo esc_url($recommendation['icon_url']); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	 ?>"
+                            <img src="<?php echo esc_url($awdr_recommendation['icon_url']); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage	 ?>"
                                  alt="discount-rule-icon" width="48" height="48">
                         </div>
-                        <h2><?php esc_html_e($recommendation['name'], 'woo-discount-rules'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText?></h2>
+                        <h2><?php esc_html_e($awdr_recommendation['name'], 'woo-discount-rules'); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText?></h2>
                     </div>
                     <div class="description" style="margin-bottom: 6px;">
-                        <?php echo esc_html($recommendation['description'], 'woo-discount-rules'); ?>
+                        <?php echo esc_html($awdr_recommendation['description'], 'woo-discount-rules'); ?>
                     </div>
-                    <a href="<?php echo esc_url($recommendation['plugin_url']); ?>"
+                    <a href="<?php echo esc_url($awdr_recommendation['plugin_url']); ?>"
                        class="btn btn-dark-blue"
                        target="_blank"><?php esc_html_e('Get Plugin', 'woo-discount-rules'); ?></a>
                 </div>
@@ -503,7 +503,7 @@ $is_pro = \Wdr\App\Helpers\Helper::hasPro();
         </div>
     </div>
 <?php
-if ($page_sort == 1 ) { ?>
+if ($awdr_page_sort == 1 ) { ?>
 <style>
     .awdr-listing-rule-tr:hover{
         background-color: #ddf2ff;

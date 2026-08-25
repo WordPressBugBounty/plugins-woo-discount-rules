@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers;
 
 use Wdr\App\Helpers\Helper;
@@ -918,6 +918,7 @@ class ManageDiscount extends Base
      * Set coupon values
      * */
     public static function setCartCouponValues($label, $discount_value, $cart_item_keys, $rule_ids, $discount_details){
+	    //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
         $coupon_code = strtolower(apply_filters('woocommerce_coupon_code', $label));
         $discount_value = apply_filters('advanced_woo_discount_rules_coupon_value', $discount_value, $label, $cart_item_keys);
         self::$apply_as_coupon_values[$coupon_code]['value'] = $discount_value;
@@ -1070,6 +1071,7 @@ class ManageDiscount extends Base
      * */
     function applyFakeCouponsForCartRules($coupon_code){
         global $woocommerce;
+	    //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
         $coupon_code = apply_filters('woocommerce_coupon_code', $coupon_code);
 
         // Validating the Coupon as Valid and discount status.
@@ -1088,6 +1090,7 @@ class ManageDiscount extends Base
 
                     // Add coupon
                     $woocommerce->cart->applied_coupons[] = $coupon_code;
+	                //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                     do_action('woocommerce_applied_coupon', $coupon_code);
 
                     return true;

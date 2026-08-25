@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers\Admin;
 
 use Wdr\App\Controllers\ManageDiscount;
@@ -50,19 +50,19 @@ class Messages extends ManageDiscount
                     if ($review_status != $review_action || $time_difference_for_review > 24 * 60 * 60) {
                         $this->saveReviewData("add");
                     }
-                    wp_redirect("https://wordpress.org/support/plugin/woo-discount-rules/reviews/");
+	                wp_redirect("https://wordpress.org/support/plugin/woo-discount-rules/reviews/");//phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect -- external wordpress.org URL, wp_safe_redirect would block it
                     exit();
 
                 case $review_action == "later":
                     if($review_status != $review_action || $time_difference_for_review > 3 * 24 * 60 * 60) {
                         $this->saveReviewData("later");
                     }
-                    wp_redirect(remove_query_arg('awdr_review'));
+	                wp_safe_redirect(remove_query_arg('awdr_review'));
                     exit();
 
                 case $review_action == "done":
                     $this->saveReviewData("done");
-                    wp_redirect(remove_query_arg('awdr_review'));
+	                wp_safe_redirect(remove_query_arg('awdr_review'));
                     exit();
             }
         }

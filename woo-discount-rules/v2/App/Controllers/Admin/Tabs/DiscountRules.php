@@ -1,4 +1,5 @@
 <?php
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Controllers\Admin\Tabs;
 
 use Wdr\App\Controllers\Configuration;
@@ -80,7 +81,7 @@ class DiscountRules extends Base
                    $params['total_count'] = ceil($params['rule_count'] /  $params['limit']);
                if ($params['total_count'] < $params['current_page'] && $params['rule_count'] > 1){
                    $redirect_url = remove_query_arg('page_no');
-                   wp_redirect($redirect_url);
+	               wp_safe_redirect($redirect_url);
                    exit();
                }
                }

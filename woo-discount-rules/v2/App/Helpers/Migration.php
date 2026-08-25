@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Helpers;
 
 use Wdr\App\Controllers\Configuration;

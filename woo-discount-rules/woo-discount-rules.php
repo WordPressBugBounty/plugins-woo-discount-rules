@@ -4,13 +4,13 @@
  * Plugin URI: https://www.flycart.org
  * Description: Simple to complex discount rules for your WooCommerce store. Core package.
  * Author: Flycart
- * Version: 2.6.16
+ * Version: 2.6.17
  * Slug: woo-discount-rules
  * Text Domain: woo-discount-rules
  * Domain Path: /i18n/languages/
- * Requires at least: 4.6.1
- * WC requires at least: 3.0
- * WC tested up to: 10.8
+ * Requires at least: 6.2
+ * WC requires at least: 8.0
+ * WC tested up to: 11.0
  * License: GPLv2 or later
  * Requires Plugins: woocommerce
  */
@@ -32,7 +32,7 @@ add_action('before_woocommerce_init', function() {
  * Current version of our app
  */
 if (!defined('WDR_VERSION')) {
-    define('WDR_VERSION', '2.6.16');
+    define('WDR_VERSION', '2.6.17');
 }
 
 /**
@@ -51,10 +51,10 @@ if($awdr_load_version === null || empty($awdr_load_version)){
     $awdr_load_version = 'v1';
     /* Hide this for public beta release */
     if(function_exists('get_posts')){
-        $rules = get_posts(array('post_type' => 'woo_discount', 'numberposts' => '1'));
-        if(empty($rules)){
-            $cart_rules = get_posts(array('post_type' => 'woo_discount_cart', 'numberposts' => '1'));
-            if(empty($cart_rules)) $awdr_load_version = 'v2';
+        $awdr_rules = get_posts(array('post_type' => 'woo_discount', 'numberposts' => '1'));
+        if(empty($awdr_rules)){
+            $awdr_cart_rules = get_posts(array('post_type' => 'woo_discount_cart', 'numberposts' => '1'));
+            if(empty($awdr_cart_rules)) $awdr_load_version = 'v2';
         }
     }
     update_option('advanced_woo_discount_rules_load_version', $awdr_load_version);
@@ -64,14 +64,14 @@ if($awdr_load_version === null || empty($awdr_load_version)){
  * Required PHP Version
  */
 if (!defined('WDR_REQUIRED_PHP_VERSION')) {
-    define('WDR_REQUIRED_PHP_VERSION', 5.6);
+    define('WDR_REQUIRED_PHP_VERSION', 7.4);
 }
 
 /**
  * Required Woocommerce Version
  */
 if (!defined('WDR_WC_REQUIRED_VERSION')) {
-    define('WDR_WC_REQUIRED_VERSION', '3.0.0');
+    define('WDR_WC_REQUIRED_VERSION', '8.0.0');
 }
 
 /**
@@ -205,8 +205,8 @@ if ($awdr_load_version == "v2") {
     /**
      * Set base file URL
      */
-    if (!defined('WOO_DISCOUNT_PLUGIN_BASENAME')) {
+    /*if (!defined('WOO_DISCOUNT_PLUGIN_BASENAME')) {
         define('WOO_DISCOUNT_PLUGIN_BASENAME', plugin_basename(__FILE__));
-    }
+    }*/
     include_once(__DIR__ . "/v1/index.php");
 }

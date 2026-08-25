@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Helpers;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly

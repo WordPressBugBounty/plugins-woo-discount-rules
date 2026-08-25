@@ -4,7 +4,7 @@ if (!defined('ABSPATH')) exit;
 use Wdr\App\Models\DBTable;
 use Wdr\App\Helpers\Helper;
 
-$is_pro_activated = isset($is_pro_activated) ? $is_pro_activated : false;
+$awdr_is_pro_activated = isset($is_pro_activated) ? $is_pro_activated : false;
 ?>
 <br>
 <div class="wdr_settings ui-page-theme-a awdr-container">
@@ -23,17 +23,17 @@ $is_pro_activated = isset($is_pro_activated) ? $is_pro_activated : false;
             </div>
         </div>
     </div>
-    <?php if ($is_pro_activated) { ?>
+    <?php if ($awdr_is_pro_activated) { ?>
         <div class="wdr_settings_container">
         <div>
             <h3><?php esc_html_e('Import Tool', 'woo-discount-rules'); ?></h3>
             <div><?php
-                $message = '';
+                $awdr_message = '';
                 if (isset($_POST['wdr-import']) && isset($_FILES["awdr_import_rule"]) && isset($_POST['security'])) {
                     //check for nonce, before
                     if (!empty($_POST['security']) && wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['security'])), 'awdr_import_rules_csv')) {
-                        $originalFileName = !empty($_FILES['awdr_import_rule']['name']) ? sanitize_file_name($_FILES['awdr_import_rule']['name']) : '';
-                        $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+                        $awdr_originalFileName = !empty($_FILES['awdr_import_rule']['name']) ? sanitize_file_name($_FILES['awdr_import_rule']['name']) : '';
+                        $awdr_fileExtension = pathinfo($awdr_originalFileName, PATHINFO_EXTENSION);
                         //check for valid file extension
                         global $wp_filesystem;
                         if (!function_exists('WP_Filesystem')) {
@@ -41,117 +41,117 @@ $is_pro_activated = isset($is_pro_activated) ? $is_pro_activated : false;
                         }
                         WP_Filesystem();
 
-                        if (strtolower($fileExtension) == "csv") {
-                            $fileName = !empty($_FILES["awdr_import_rule"]["tmp_name"]) ? sanitize_text_field($_FILES["awdr_import_rule"]["tmp_name"]) : '';
-                            $originalFileType = !empty($_FILES["awdr_import_rule"]["type"]) ? sanitize_mime_type($_FILES["awdr_import_rule"]["type"]) : '';
-                            $valid_csv_mime_types = array('application/vnd.ms-excel', 'text/plain', 'text/csv', 'text/tsv');
+                        if (strtolower($awdr_fileExtension) == "csv") {
+                            $awdr_fileName = !empty($_FILES["awdr_import_rule"]["tmp_name"]) ? sanitize_text_field($_FILES["awdr_import_rule"]["tmp_name"]) : '';
+                            $awdr_originalFileType = !empty($_FILES["awdr_import_rule"]["type"]) ? sanitize_mime_type($_FILES["awdr_import_rule"]["type"]) : '';
+                            $awdr_valid_csv_mime_types = array('application/vnd.ms-excel', 'text/plain', 'text/csv', 'text/tsv');
                             //Check for valid mime type
-                            if (isset($_FILES["awdr_import_rule"]["size"]) && $_FILES["awdr_import_rule"]["size"] > 0 && in_array($originalFileType, $valid_csv_mime_types)) {
-                                $file_content = '';
-                                if ($wp_filesystem->exists($fileName)) {
-                                    $file_content = $wp_filesystem->get_contents($fileName);
+                            if (isset($_FILES["awdr_import_rule"]["size"]) && $_FILES["awdr_import_rule"]["size"] > 0 && in_array($awdr_originalFileType, $awdr_valid_csv_mime_types)) {
+                                $awdr_file_content = '';
+                                if ($wp_filesystem->exists($awdr_fileName)) {
+                                    $awdr_file_content = $wp_filesystem->get_contents($awdr_fileName);
                                 }
-                                if (!empty($file_content)) {
-                                    $current_date_time = '';
+                                if (!empty($awdr_file_content)) {
+                                    $awdr_current_date_time = '';
                                     if (function_exists('current_time')) {
-                                        $current_time = current_time('timestamp', true);
-                                        $current_date_time = gmdate('Y-m-d H:i:s', $current_time);
+                                        $awdr_current_time = current_time('timestamp', true);
+                                        $awdr_current_date_time = gmdate('Y-m-d H:i:s', $awdr_current_time);
                                     }
 
                                     $current_user = get_current_user_id();
-                                    $csv_separator = apply_filters('advanced_woo_discount_rules_csv_import_export_separator', ',');
-                                    $csv_length = apply_filters('advanced_woo_discount_rules_csv_length_for_import', 100000);
+                                    $awdr_csv_separator = apply_filters('advanced_woo_discount_rules_csv_import_export_separator', ',');
+                                    $awdr_csv_length = apply_filters('advanced_woo_discount_rules_csv_length_for_import', 100000);
 
                                     // Convert file content into lines
-                                    $lines = explode(PHP_EOL, $file_content);
-                                    $i = 1;
+                                    $awdr_lines = explode(PHP_EOL, $awdr_file_content);
+                                    $awdr_i = 1;
 
-                                    foreach ($lines as $line) {
-                                        if (empty($line)) {
+                                    foreach ($awdr_lines as $awdr_line) {
+                                        if (empty($awdr_line)) {
                                             continue;
                                         }
-	                                    $column = str_getcsv($line, $csv_separator, '"', '\\');
-                                        if ($i == 1) {
-                                            $i++;
+	                                    $awdr_column = str_getcsv($awdr_line, $awdr_csv_separator, '"', '\\');
+                                        if ($awdr_i == 1) {
+                                            $awdr_i++;
                                             continue;
                                         }
-                                        $rule_id = intval(isset($column[0]) ? $column[0] : NULL);
-                                        $enabled = intval(isset($column[1]) ? $column[1] : 0);
-                                        $deleted = intval(isset($column[2]) ? $column[2] : 0);
-                                        $exclusive = intval(isset($column[3]) ? $column[3] : 0);
-                                        $title = sanitize_text_field(isset($column[4]) ? $column[4] : "Untitled Rule");
-                                        $priority = intval(isset($column[5]) ? $column[5] : $rule_id);
-                                        $apply_to = isset($column[6]) ? $column[6] : NULL;
-                                        $filters = isset($column[7]) ? $column[7] : array();
-                                        $filters = wp_json_encode(Helper::sanitizeJson($filters));
-                                        $conditions = isset($column[8]) ? $column[8] : array();
-                                        $conditions = wp_json_encode(Helper::sanitizeJson($conditions));
-                                        $product_adjustments = isset($column[9]) ? $column[9] : array();
-                                        $product_adjustments = wp_json_encode(Helper::sanitizeJson($product_adjustments));
-                                        $cart_adjustment = isset($column[10]) ? $column[10] : array();
-                                        $cart_adjustment = wp_json_encode(Helper::sanitizeJson($cart_adjustment));
-                                        $buy_x_get_x = isset($column[11]) ? $column[11] : array();
-                                        $buy_x_get_x = wp_json_encode(Helper::sanitizeJson($buy_x_get_x));
-                                        $buy_x_get_y = isset($column[12]) ? $column[12] : array();
-                                        $buy_x_get_y = wp_json_encode(Helper::sanitizeJson($buy_x_get_y));
-                                        $bulk_adjustment = isset($column[13]) ? $column[13] : array();
-                                        $bulk_adjustment = wp_json_encode(Helper::sanitizeJson($bulk_adjustment));
-                                        $set_adjustment = isset($column[14]) ? $column[14] : array();
-                                        $set_adjustment = wp_json_encode(Helper::sanitizeJson($set_adjustment));
-                                        $other_discount = isset($column[15]) ? $column[15] : NULL;
-                                        $date_from = isset($column[16]) && !empty($column[16]) ? intval($column[16]) : NULL;
-                                        $date_to = isset($column[17]) && !empty($column[16]) ? intval($column[17]) : NULL;
-                                        $usage_limits = intval(isset($column[18]) ? $column[18] : 0);
-                                        $rule_language = isset($column[19]) ? $column[19] : array();
-                                        $rule_language = wp_json_encode(Helper::sanitizeJson($rule_language));
-                                        $used_limits = intval(isset($column[20]) ? $column[20] : 0);
-                                        $additional = isset($column[21]) ? $column[21] : array('condition_relationship' => 'and');
-                                        $additional = wp_json_encode(Helper::sanitizeJson($additional));
-                                        $max_discount_sum = intval(isset($column[22]) ? $column[22] : NULL);
-                                        $advanced_discount_message = isset($column[23]) ? $column[23] : array('display' => 0, 'badge_color_picker' => '#ffffff', 'badge_text_color_picker' => '#000000', 'badge_text' => '');
+                                        $awdr_rule_id = intval(isset($awdr_column[0]) ? $awdr_column[0] : NULL);
+                                        $awdr_enabled = intval(isset($awdr_column[1]) ? $awdr_column[1] : 0);
+                                        $awdr_deleted = intval(isset($awdr_column[2]) ? $awdr_column[2] : 0);
+                                        $awdr_exclusive = intval(isset($awdr_column[3]) ? $awdr_column[3] : 0);
+                                        $title = sanitize_text_field(isset($awdr_column[4]) ? $awdr_column[4] : "Untitled Rule");
+                                        $awdr_priority = intval(isset($awdr_column[5]) ? $awdr_column[5] : $awdr_rule_id);
+                                        $awdr_apply_to = isset($awdr_column[6]) ? $awdr_column[6] : NULL;
+                                        $awdr_filters = isset($awdr_column[7]) ? $awdr_column[7] : array();
+                                        $awdr_filters = wp_json_encode(Helper::sanitizeJson($awdr_filters));
+                                        $awdr_conditions = isset($awdr_column[8]) ? $awdr_column[8] : array();
+                                        $awdr_conditions = wp_json_encode(Helper::sanitizeJson($awdr_conditions));
+                                        $awdr_product_adjustments = isset($awdr_column[9]) ? $awdr_column[9] : array();
+                                        $awdr_product_adjustments = wp_json_encode(Helper::sanitizeJson($awdr_product_adjustments));
+                                        $awdr_cart_adjustment = isset($awdr_column[10]) ? $awdr_column[10] : array();
+                                        $awdr_cart_adjustment = wp_json_encode(Helper::sanitizeJson($awdr_cart_adjustment));
+                                        $awdr_buy_x_get_x = isset($awdr_column[11]) ? $awdr_column[11] : array();
+                                        $awdr_buy_x_get_x = wp_json_encode(Helper::sanitizeJson($awdr_buy_x_get_x));
+                                        $awdr_buy_x_get_y = isset($awdr_column[12]) ? $awdr_column[12] : array();
+                                        $awdr_buy_x_get_y = wp_json_encode(Helper::sanitizeJson($awdr_buy_x_get_y));
+                                        $awdr_bulk_adjustment = isset($awdr_column[13]) ? $awdr_column[13] : array();
+                                        $awdr_bulk_adjustment = wp_json_encode(Helper::sanitizeJson($awdr_bulk_adjustment));
+                                        $awdr_set_adjustment = isset($awdr_column[14]) ? $awdr_column[14] : array();
+                                        $awdr_set_adjustment = wp_json_encode(Helper::sanitizeJson($awdr_set_adjustment));
+                                        $awdr_other_discount = isset($awdr_column[15]) ? $awdr_column[15] : NULL;
+                                        $awdr_date_from = isset($awdr_column[16]) && !empty($awdr_column[16]) ? intval($awdr_column[16]) : NULL;
+                                        $awdr_date_to = isset($awdr_column[17]) && !empty($awdr_column[16]) ? intval($awdr_column[17]) : NULL;
+                                        $awdr_usage_limits = intval(isset($awdr_column[18]) ? $awdr_column[18] : 0);
+                                        $awdr_rule_language = isset($awdr_column[19]) ? $awdr_column[19] : array();
+                                        $awdr_rule_language = wp_json_encode(Helper::sanitizeJson($awdr_rule_language));
+                                        $awdr_used_limits = intval(isset($awdr_column[20]) ? $awdr_column[20] : 0);
+                                        $awdr_additional = isset($awdr_column[21]) ? $awdr_column[21] : array('condition_relationship' => 'and');
+                                        $awdr_additional = wp_json_encode(Helper::sanitizeJson($awdr_additional));
+                                        $awdr_max_discount_sum = intval(isset($awdr_column[22]) ? $awdr_column[22] : NULL);
+                                        $advanced_discount_message = isset($awdr_column[23]) ? $awdr_column[23] : array('display' => 0, 'badge_color_picker' => '#ffffff', 'badge_text_color_picker' => '#000000', 'badge_text' => '');
                                         $advanced_discount_message = wp_json_encode(Helper::sanitizeJson($advanced_discount_message));
-                                        $discount_type = sanitize_key(isset($column[24]) ? $column[24] : "wdr_simple_discount");
-                                        $used_coupons = isset($column[25]) ? $column[25] : array();
-                                        $used_coupons = wp_json_encode(Helper::sanitizeJson($used_coupons));
-                                        $arg = array(
-                                            'enabled' => $enabled,
-                                            'deleted' => $deleted,
-                                            'exclusive' => $exclusive,
+                                        $awdr_discount_type = sanitize_key(isset($awdr_column[24]) ? $awdr_column[24] : "wdr_simple_discount");
+                                        $awdr_used_coupons = isset($awdr_column[25]) ? $awdr_column[25] : array();
+                                        $awdr_used_coupons = wp_json_encode(Helper::sanitizeJson($awdr_used_coupons));
+                                        $awdr_arg = array(
+                                            'enabled' => $awdr_enabled,
+                                            'deleted' => $awdr_deleted,
+                                            'exclusive' => $awdr_exclusive,
                                             'title' => (empty($title)) ? esc_html__('Untitled Rule', 'woo-discount-rules') : $title,
-                                            'priority' => $priority,
-                                            'apply_to' => $apply_to,
-                                            'filters' => $filters,
-                                            'conditions' => $conditions,
-                                            'product_adjustments' => $product_adjustments,
-                                            'cart_adjustments' => $cart_adjustment,
-                                            'buy_x_get_x_adjustments' => $buy_x_get_x,
-                                            'buy_x_get_y_adjustments' => $buy_x_get_y,
-                                            'bulk_adjustments' => $bulk_adjustment,
-                                            'set_adjustments' => $set_adjustment,
-                                            'other_discounts' => $other_discount,
-                                            'date_from' => $date_from,
-                                            'date_to' => $date_to,
-                                            'usage_limits' => $usage_limits,
-                                            'rule_language' => $rule_language,
-                                            'used_limits' => $used_limits,
-                                            'additional' => $additional,
-                                            'max_discount_sum' => $max_discount_sum,
+                                            'priority' => $awdr_priority,
+                                            'apply_to' => $awdr_apply_to,
+                                            'filters' => $awdr_filters,
+                                            'conditions' => $awdr_conditions,
+                                            'product_adjustments' => $awdr_product_adjustments,
+                                            'cart_adjustments' => $awdr_cart_adjustment,
+                                            'buy_x_get_x_adjustments' => $awdr_buy_x_get_x,
+                                            'buy_x_get_y_adjustments' => $awdr_buy_x_get_y,
+                                            'bulk_adjustments' => $awdr_bulk_adjustment,
+                                            'set_adjustments' => $awdr_set_adjustment,
+                                            'other_discounts' => $awdr_other_discount,
+                                            'date_from' => $awdr_date_from,
+                                            'date_to' => $awdr_date_to,
+                                            'usage_limits' => $awdr_usage_limits,
+                                            'rule_language' => $awdr_rule_language,
+                                            'used_limits' => $awdr_used_limits,
+                                            'additional' => $awdr_additional,
+                                            'max_discount_sum' => $awdr_max_discount_sum,
                                             'advanced_discount_message' => $advanced_discount_message,
-                                            'discount_type' => $discount_type,
-                                            'used_coupons' => $used_coupons,
+                                            'discount_type' => $awdr_discount_type,
+                                            'used_coupons' => $awdr_used_coupons,
                                             'created_by' => $current_user,
-                                            'created_on' => $current_date_time,
+                                            'created_on' => $awdr_current_date_time,
                                             'modified_by' => $current_user,
-                                            'modified_on' => $current_date_time,
+                                            'modified_on' => $awdr_current_date_time,
                                         );
-                                        $column_format = array('%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s');
-                                        $rule_id = DBTable::saveRule($column_format, $arg);
-                                        if (!empty($rule_id)) {
+                                        $awdr_column_format = array('%d', '%d', '%d', '%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s');
+                                        $awdr_rule_id = DBTable::saveRule($awdr_column_format, $awdr_arg);
+                                        if (!empty($awdr_rule_id)) {
                                             $type = "success";
-                                            $message = wp_kses_post('<b style="color: green;">' . __('Rules Imported successfully', 'woo-discount-rules') . '</b>');
+                                            $awdr_message = wp_kses_post('<b style="color: green;">' . __('Rules Imported successfully', 'woo-discount-rules') . '</b>');
                                         } else {
                                             $type = "error";
-                                            $message = wp_kses_post('<b style="color: red;">' . __('Problem in Importing CSV Data', 'woo-discount-rules') . '</b>');
+                                            $awdr_message = wp_kses_post('<b style="color: red;">' . __('Problem in Importing CSV Data', 'woo-discount-rules') . '</b>');
                                             break;
                                         }
                                     }
@@ -163,7 +163,7 @@ $is_pro_activated = isset($is_pro_activated) ? $is_pro_activated : false;
                 <form method="post" name="awdr-import-csv" id="awdr-import-csv" enctype="multipart/form-data">
                     <input type="hidden" name="security" value="<?php echo esc_attr(wp_create_nonce('awdr_import_rules_csv')) ?>">
                     <input type="file" name="awdr_import_rule" id="awdr-file-uploader" accept=".csv"><br>
-                    <span id="awdr-upload-response"><?php echo wp_kses_post($message); ?></span></br>
+                    <span id="awdr-upload-response"><?php echo wp_kses_post($awdr_message); ?></span></br>
                     <button type="submit" id="wdr-import" name="wdr-import" class="button button-primary">
                         <?php esc_html_e('Import', 'woo-discount-rules'); ?>
                     </button>

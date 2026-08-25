@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Helpers;
 
 use WC_Order;
@@ -1909,7 +1910,7 @@ class Woocommerce
             if (count($attributes) > $modify_count) {
                 $variation_parent_id = self::getProductParentId($product);
                 $variation_parent_title = get_the_title($variation_parent_id);
-                $variation_separator = apply_filters('woocommerce_product_variation_title_attributes_separator', ' - ', $product);
+                $variation_separator = apply_filters('woocommerce_product_variation_title_attributes_separator', ' - ', $product);//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying third-party filter for compatibility
                 $variation_attributes = self::wc_get_formatted_variation($product, true, false);
                 $product_title = $variation_parent_title . $variation_separator . $variation_attributes;
             } else {
@@ -1945,7 +1946,7 @@ class Woocommerce
      * @return bool
      */
     static function checkProductIsPurchasable($product) {
-	    if(!apply_filters('wlr_is_purchasable_need_to_check',true)){
+	    if(!apply_filters('wlr_is_purchasable_need_to_check',true)){//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying third-party filter for compatibility
 		    return true;
 	    }
         if(is_object($product) && method_exists($product, 'is_purchasable')) {

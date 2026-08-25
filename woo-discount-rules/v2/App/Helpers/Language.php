@@ -1,5 +1,6 @@
 <?php
 
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Helpers;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
@@ -24,7 +25,7 @@ class Language
      */
     static function getAvailableLanguages()
     {
-        $languages = apply_filters('wpml_active_languages', NULL, 'orderby=id&order=desc');
+        $languages = apply_filters('wpml_active_languages', NULL, 'orderby=id&order=desc');//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- applying third-party filter for compatibility
         if (empty($languages) && function_exists('icl_get_languages')) {
             $languages = icl_get_languages();
         }

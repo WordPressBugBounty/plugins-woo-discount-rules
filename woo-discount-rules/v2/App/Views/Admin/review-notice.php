@@ -1,3 +1,8 @@
+<?php
+if (!defined('ABSPATH')) {
+    exit; // Exit if accessed directly
+}
+?>
 <div class="notice notice-info is-dismissible">
     <div>
         <img style="max-width: 85px; margin-top: 13px" src="https://ps.w.org/woo-discount-rules/assets/icon-256x256.png" <?php //phpcs:ignore PluginCheck.CodeAnalysis.Offloading.OffloadedContent,PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>>

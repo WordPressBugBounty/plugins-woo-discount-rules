@@ -15,31 +15,31 @@ if (!defined('ABSPATH')) {
             <span class="dashicons dashicons-no-alt remove-current-row"></span>
         </div>
     </div>
-    <?php $wdr_product_filters = $base->getProductFilterTypes(); ?>
+    <?php $awdr_product_filters = $base->getProductFilterTypes(); ?>
     <div class="wdr-build-filter-type">
         <div class="wdr-filter-type">
             <select name="filters[{i}][type]" class="wdr-product-filter-type"><?php
-                if (isset($wdr_product_filters) && !empty($wdr_product_filters)) {
-                    foreach ($wdr_product_filters as $wdr_filter_key => $wdr_filter_value) {
+                if (isset($awdr_product_filters) && !empty($awdr_product_filters)) {
+                    foreach ($awdr_product_filters as $awdr_filter_key => $awdr_filter_value) {
                         ?>
-                        <optgroup label="<?php echo esc_attr($wdr_filter_key); ?>"><?php
-                        foreach ($wdr_filter_value as $key => $value) {
+                        <optgroup label="<?php echo esc_attr($awdr_filter_key); ?>"><?php
+                        foreach ($awdr_filter_value as $awdr_key => $awdr_value) {
                             ?>
                             <option
                             <?php
-                            if(isset($value['active']) && $value['active'] == false){
+                            if(isset($awdr_value['active']) && $awdr_value['active'] == false){
                                 ?>
                                 disabled="disabled"
                                 <?php
                             } else {
                                 ?>
-                                value="<?php echo esc_attr($key); ?>"
+                                value="<?php echo esc_attr($awdr_key); ?>"
                                 <?php
                             }
                             ?>
-                             <?php if ($key == 'products') {
+                             <?php if ($awdr_key == 'products') {
                                 echo 'selected';
-                            } ?>><?php esc_html_e($value['label'], 'woo-discount-rules');//phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText  ?></option><?php
+                            } ?>><?php esc_html_e($awdr_value['label'], 'woo-discount-rules');//phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText  ?></option><?php
                         } ?>
                         </optgroup><?php
                     }
@@ -47,10 +47,10 @@ if (!defined('ABSPATH')) {
             </select>
         </div>
     </div>
-    <?php $wdr_product_filter_templates = $base->getFilterTemplatesContent();
-    if (isset($wdr_product_filter_templates) && !empty($wdr_product_filter_templates)) {
-        foreach ($wdr_product_filter_templates as $wdr_filter_template) {
-            echo wp_kses($wdr_filter_template,[
+    <?php $awdr_product_filter_templates = $base->getFilterTemplatesContent();
+    if (isset($awdr_product_filter_templates) && !empty($awdr_product_filter_templates)) {
+        foreach ($awdr_product_filter_templates as $awdr_filter_template) {
+            echo wp_kses($awdr_filter_template,[
                'div' => [
                     'class' => [],
                     'id' => [],
@@ -77,32 +77,32 @@ if (!defined('ABSPATH')) {
             ]);
         }
     }
-    $wdr_product_conditions = $base->getProductConditionsTypes();
+    $awdr_product_conditions = $base->getProductConditionsTypes();
     ?>
     <div class="wdr-build-condition-type">
         <div class="wdr-condition-type">
             <select name="conditions[{i}][type]" class="wdr-product-condition-type awdr-left-align"><?php
-                if (isset($wdr_product_conditions) && !empty($wdr_product_conditions)) {
-                    foreach ($wdr_product_conditions as $wdr_condition_key => $wdr_condition_value) {
+                if (isset($awdr_product_conditions) && !empty($awdr_product_conditions)) {
+                    foreach ($awdr_product_conditions as $awdr_condition_key => $awdr_condition_value) {
                         ?>
-                        <optgroup label="<?php echo esc_attr($wdr_condition_key); ?>"><?php
-                        foreach ($wdr_condition_value as $key => $value) {
+                        <optgroup label="<?php echo esc_attr($awdr_condition_key); ?>"><?php
+                        foreach ($awdr_condition_value as $awdr_key => $awdr_value) {
                             ?>
-                            <option class="<?php echo ( $key == 'cart_item_product_onsale') ? 'wdr-hide awdr-free-shipping-special-condition' : ''; ?>"
+                            <option class="<?php echo ( $awdr_key == 'cart_item_product_onsale') ? 'wdr-hide awdr-free-shipping-special-condition' : ''; ?>"
                             <?php
-                            if(isset($value['enable']) && $value['enable'] === false){
+                            if(isset($awdr_value['enable']) && $awdr_value['enable'] === false){
                                 ?>
                                 disabled="disabled"
                                 <?php
                             } else {
                                 ?>
-                                value="<?php echo esc_attr($key); ?>"
+                                value="<?php echo esc_attr($awdr_key); ?>"
                                 <?php
                             }
                             ?>
-                             <?php if ($key == 'products') {
+                             <?php if ($awdr_key == 'products') {
                                 echo 'selected';
-                            } ?>><?php esc_html_e($value['label'], 'woo-discount-rules');//phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></option><?php
+                            } ?>><?php esc_html_e($awdr_value['label'], 'woo-discount-rules');//phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></option><?php
                         } ?>
                         </optgroup><?php
                     }
@@ -111,10 +111,10 @@ if (!defined('ABSPATH')) {
             <span class="wdr_desc_text awdr-clear-both"><?php esc_html_e('Condition Type', 'woo-discount-rules'); ?></span>
         </div>
     </div>
-    <?php $wdr_product_conditions_templates = $base->getConditionsTemplatesContent();
-    if (isset($wdr_product_conditions_templates) && !empty($wdr_product_conditions_templates)) {
-        foreach ($wdr_product_conditions_templates as $wdr_conditions_template) {
-            echo wp_kses($wdr_conditions_template,[
+    <?php $awdr_product_conditions_templates = $base->getConditionsTemplatesContent();
+    if (isset($awdr_product_conditions_templates) && !empty($awdr_product_conditions_templates)) {
+        foreach ($awdr_product_conditions_templates as $awdr_conditions_template) {
+            echo wp_kses($awdr_conditions_template,[
 		        'div' => [
 			        'class' => [],
 			        'id' => [],
@@ -162,7 +162,7 @@ if (!defined('ABSPATH')) {
 	        ]);
         }
     }
-    $render_saved_condition = false;
+    $render_saved_condition = false;//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- shared template variable, read by pro add-on condition templates
     include'SubtotalPromotion.php';
     include'QuantityPromotion.php'; ?>
 </div>

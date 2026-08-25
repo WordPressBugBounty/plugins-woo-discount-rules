@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Compatibility;
 
 if (!defined('ABSPATH')) exit;
@@ -18,6 +18,7 @@ class MultiCurrencyByWPML extends Base
             add_filter('advanced_woo_discount_rules_converted_currency_value', function($price) {
                 if(is_numeric($price) && !empty($price)) {
                     // Pass the price to the currency conversion filter provided by the WPML.
+	                //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                     $price = apply_filters('wcml_raw_price_amount', $price);
                 }
             

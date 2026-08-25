@@ -1,5 +1,5 @@
 <?php
-
+//phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedNamespaceFound
 namespace Wdr\App\Compatibility;
 
 if (!defined('ABSPATH')) exit;
@@ -21,6 +21,7 @@ class AeliaCurrencySwitcherByAelia extends Base
                     // Pass the price to the currency conversion filter provided by the Currency Switcher. This
                     // will ensure that the discount is converted correctly
                     if(function_exists('get_woocommerce_currency')){
+                        //phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
                         $price = apply_filters('wc_aelia_cs_convert', $price, $from_currency, get_woocommerce_currency(), 5);
                         if(function_exists('bcdiv')){
                             $price = bcdiv($price, 1, 2);
