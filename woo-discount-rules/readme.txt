@@ -4,7 +4,7 @@ Donate link: https://flycart.org/
 Tags: woocommerce, coupons, discounts, dynamic pricing, bulk discount
 Requires at least: 6.2
 Tested up to: 7.1
-Stable tag: 2.6.17
+Stable tag: 2.6.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -291,6 +291,10 @@ In that case, the rule with the higher priority will be applied.
 * Dutch Translation - [@mvdburg1971](https://profiles.wordpress.org/mvdburg1971) - Michael van der Burg
 
 == Changelog ==
+= 2.6.18 - 17/09/26 =
+* Added: WooCommerce 11.1 compatibility.
+* Added: WordPress 7.1 compatibility.
+
 = 2.6.17 - 25/08/26 =
 * Fixed: Added HPOS support to report discount total calculations.
 
